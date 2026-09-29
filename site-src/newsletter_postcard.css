@@ -8,6 +8,8 @@
    7 px inside it on ::after, which also carries the stamp, the postmark, the divider and the lines.
    Longhands only: the site compiler (LESS 1.3.3) reads "a / b" between numbers as a division. */
 .fe-block-60608d066275f348e180 { position: relative; overflow: visible !important; }
+/* the shape's own fill turns to paper too: in the page editor the shape stacks above ::before and the card showed ink */
+.fe-block-60608d066275f348e180 .sqs-shape, .fe-block-60608d066275f348e180 .sqs-shape rect { fill: var(--ivory) !important; }
 .fe-block-60608d066275f348e180::before {
   content: ""; position: absolute; z-index: 1; pointer-events: none; top: 0; right: 0; bottom: 0; left: 0;
   background-color: var(--ivory); box-shadow: 0 24px 60px rgba(16,24,32,.14), 0 2px 6px rgba(16,24,32,.06);
