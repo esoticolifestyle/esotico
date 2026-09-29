@@ -1,0 +1,144 @@
+<!doctype html>
+<!-- esotico monthly letter (29 Sep 2026), for Sender.net: Email campaigns > New campaign > Custom HTML email.
+     Look: the homepage hero ("the salon") at the top - arch, gilt frame and half-gold ring baked into
+     images/email/<month>-salon.jpg by make_email_heroes.py; tracked capitals with ONE Bodoni italic word in gilt; the
+     pieces on ivory, each packshot on a white mount inside a gold hairline (the shop cards); the gift band as the esotico
+     gift tag (ink card, double gold frame, the half-gold "o"). Each month change the parts marked EDIT.
+     Prices and links read from the store on 29 Sep 2026. Sender fills {{ firstname }} and {$unsubscribe_link}. -->
+<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="x-apple-disable-message-reformatting">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark">
+<title>October at esotico</title>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&amp;family=Bodoni+Moda:ital,wght@1,400&amp;display=swap" rel="stylesheet">
+<style>
+
+  /* dark mode: the email is designed dark; Outlook.com / new Outlook mark what they recolour - put it back */
+  :root { color-scheme: light dark; supported-color-schemes: light dark; }
+  [data-ogsc] .c-iv { color: #F4EFE7 !important; }
+  [data-ogsc] .c-sd { color: #EAE3D7 !important; }
+  [data-ogsc] .c-gt { color: #B6A274 !important; }
+  [data-ogsc] .c-gd { color: #84754E !important; }
+  [data-ogsc] .c-ft { color: #8f8467 !important; }
+  [data-ogsc] .c-ink { color: #101820 !important; }
+  [data-ogsb] .b-ink { background-color: #101820 !important; }
+  [data-ogsb] .b-iv { background-color: #F4EFE7 !important; }
+  [data-ogsb] .b-wh { background-color: #ffffff !important; }
+  body { margin: 0; padding: 0; background-color: #101820; }
+  @media (max-width: 620px) {
+    .wrap { width: 100% !important; }
+    .pad { padding-left: 24px !important; padding-right: 24px !important; }
+    .h1 { font-size: 28px !important; letter-spacing: 5px !important; }
+    .h1 em { font-size: 34px !important; }
+    .col { display: block !important; width: 100% !important; padding: 0 0 30px !important; }
+    .col img { width: 100% !important; height: auto !important; }
+  }
+</style>
+<!--[if mso]>
+<style>
+    /* classic Outlook: the ink comes from the VML background below; nothing on top of it may carry a colour */
+    table, td, div, a { background:transparent !important; background-color:transparent !important; }
+    /* the product panel is ink here, not ivory: its dark text turns ivory (a plain colour, no lock) */
+    .c-ink { color:#F4EFE7 !important; }
+    /* classic Outlook ignores padding on a link, so the button frame hugged the words (owner, 29 Sep):
+       the button's space moves to its cell */
+    .btn { padding:16px 38px !important; }
+</style>
+<![endif]-->
+</head>
+<body class="b-ink" style="margin:0;padding:0;background-color:#101820;">
+<!--[if gte mso 9]><v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t"><v:fill type="tile" color="#101820"/></v:background><![endif]-->
+<!-- EDIT: preview line -->
+<div class="c-ink" style="display:none;max-height:0;overflow:hidden;opacity:0;color:#101820;">Four pieces for the evenings drawing in.&#8199;&#65279;&#847;&#8199;&#65279;&#847;&#8199;&#65279;&#847;</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="b-ink" bgcolor="#101820" style="background-color:#101820;">
+  <tr><td align="center" style="padding:30px 0 40px;">
+    <table role="presentation" class="wrap b-ink" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#101820" style="width:600px;max-width:600px;background-color:#101820;">
+
+
+      <!-- EDIT: the month's salon (make_email_heroes.py) -->
+      <tr><td style="padding:0;">
+        <a href="https://esotico.ca" style="text-decoration:none;"><img src="https://esoticolifestyle.github.io/esotico/images/email/october-salon-mark.jpg" width="600" alt="esotico. Hypsoé Still candlesticks lit on a dining table, in an arched gold frame" style="display:block;width:600px;max-width:100%;height:auto;border:0;"></a>
+      </td></tr>
+
+      <!-- EDIT: label, headline (one italic word), opening -->
+      <tr><td class="pad" align="center" style="padding:10px 56px 44px;font-family:'Josefin Sans',Helvetica,Arial,sans-serif;">
+        <p class="c-gt" style="margin:0 0 18px;font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#B6A274;">&#9680;&nbsp;&nbsp;October at esotico</p>
+        <h1 class="h1" style="margin:0 0 26px;font-size:32px;font-weight:300;letter-spacing:7px;line-height:1.3;text-transform:uppercase;color:#F4EFE7;"><span class="c-iv" style="color:#F4EFE7;">The rooms we come</span> <em class="c-gt" style="font-family:'Bodoni Moda','Bodoni 72',Didot,Georgia,serif;font-style:italic;font-weight:400;font-size:40px;letter-spacing:1px;text-transform:none;color:#B6A274;">home</em> <span class="c-iv" style="color:#F4EFE7;">to</span></h1>
+        <p class="c-sd" style="margin:0;font-size:16px;line-height:1.75;font-weight:300;color:#EAE3D7;">{% if firstname != blank %}{{ firstname }}, the{% else %}The{% endif %} evenings draw in, and the candles come out. Four pieces we're living with this month, from the maisons we carry.</p>
+      </td></tr>
+
+      <!-- EDIT: the four pieces, on ivory, each on a white mount inside a gold hairline -->
+      <tr><td class="pad b-iv" bgcolor="#F4EFE7" style="background-color:#F4EFE7;padding:44px 40px 12px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td class="col c-ink" width="50%" valign="top" style="width:50%;padding:0 12px 34px 0;font-family:'Josefin Sans',Helvetica,Arial,sans-serif;color:#101820;">
+              <a href="https://esotico.ca/shop/p/rainforest-amazonia" class="b-wh" style="display:block;border:1px solid #84754E;padding:8px;background-color:#ffffff;text-decoration:none;"><img src="https://images.squarespace-cdn.com/content/v1/6abad52803349b0b45a823de/1790643962583-3QUH247JTS3SFG7U822C/baobab-collection-rainforest-amazonia.jpg?format=750w" width="230" alt="Baobab Collection Rainforest Amazonia scented candle" style="display:block;width:230px;max-width:100%;height:auto;border:0;"></a>
+              <p class="c-gd" style="margin:16px 0 5px;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#84754E;">Baobab Collection</p>
+              <p class="c-ink" style="margin:0 0 4px;font-size:15px;line-height:1.4;color:#101820;">Rainforest Amazonia, limited edition</p>
+              <p class="c-ink" style="margin:0;font-size:14px;font-weight:300;color:#101820;">From $140</p>
+            </td>
+            <td class="col c-ink" width="50%" valign="top" style="width:50%;padding:0 0 34px 12px;font-family:'Josefin Sans',Helvetica,Arial,sans-serif;color:#101820;">
+              <a href="https://esotico.ca/shop/p/faux-fur-throw-chestnut" class="b-wh" style="display:block;border:1px solid #84754E;padding:8px;background-color:#ffffff;text-decoration:none;"><img src="https://images.squarespace-cdn.com/content/v1/6abad52803349b0b45a823de/1790640228684-B0KF5UA6V1Z52RN61M07/Evelyne-Prelonge-faux-fur-throw-chestnut.jpg?format=750w" width="230" alt="Evelyne Prélonge faux fur throw in Chestnut" style="display:block;width:230px;max-width:100%;height:auto;border:0;"></a>
+              <p class="c-gd" style="margin:16px 0 5px;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#84754E;">Evelyne Prélonge</p>
+              <p class="c-ink" style="margin:0 0 4px;font-size:15px;line-height:1.4;color:#101820;">Faux Fur Throw, Chestnut</p>
+              <p class="c-ink" style="margin:0;font-size:14px;font-weight:300;color:#101820;">$700 <span class="c-ft" style="text-decoration:line-through;color:#8f8467;">$960</span></p>
+            </td>
+          </tr>
+          <tr>
+            <td class="col c-ink" width="50%" valign="top" style="width:50%;padding:0 12px 34px 0;font-family:'Josefin Sans',Helvetica,Arial,sans-serif;color:#101820;">
+              <a href="https://esotico.ca/shop/p/gold-table-still-candlestick" class="b-wh" style="display:block;border:1px solid #84754E;padding:8px;background-color:#ffffff;text-decoration:none;"><img src="https://images.squarespace-cdn.com/content/v1/6abad52803349b0b45a823de/1790640233638-9BBPBJEK4PG71SGABTMG/hypsoe-table-candlestick-still-gold_1.jpg?format=750w" width="230" alt="Hypsoé Still table candlesticks in gold" style="display:block;width:230px;max-width:100%;height:auto;border:0;"></a>
+              <p class="c-gd" style="margin:16px 0 5px;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#84754E;">Hypsoé</p>
+              <p class="c-ink" style="margin:0 0 4px;font-size:15px;line-height:1.4;color:#101820;">Still Table Candlesticks, Gold</p>
+              <p class="c-ink" style="margin:0;font-size:14px;font-weight:300;color:#101820;">From $52</p>
+            </td>
+            <td class="col c-ink" width="50%" valign="top" style="width:50%;padding:0 0 34px 12px;font-family:'Josefin Sans',Helvetica,Arial,sans-serif;color:#101820;">
+              <a href="https://esotico.ca/shop/p/bronze-organic-glass-valet-tray-round" class="b-wh" style="display:block;border:1px solid #84754E;padding:8px;background-color:#ffffff;text-decoration:none;"><img src="https://images.squarespace-cdn.com/content/v1/6abad52803349b0b45a823de/1790644367972-N9J3FBNEWZM60ABNLUFU/Ethnicraft_Bronze_Organic_Glass_Valet_Tray_Round_1.jpg?format=750w" width="230" alt="Ethnicraft round bronze organic glass valet tray" style="display:block;width:230px;max-width:100%;height:auto;border:0;"></a>
+              <p class="c-gd" style="margin:16px 0 5px;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#84754E;">Ethnicraft</p>
+              <p class="c-ink" style="margin:0 0 4px;font-size:15px;line-height:1.4;color:#101820;">Bronze Organic Glass Valet Tray, Round</p>
+              <p class="c-ink" style="margin:0;font-size:14px;font-weight:300;color:#101820;">$101</p>
+            </td>
+          </tr>
+        </table>
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0 auto 34px;"><tr>
+          <td class="btn" style="border:1px solid #84754E;">
+            <a href="https://esotico.ca/shop" class="c-ink" style="display:inline-block;padding:16px 38px;font-family:'Josefin Sans',Helvetica,Arial,sans-serif;font-size:12px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#101820;text-decoration:none;">See the collection</a>
+          </td>
+        </tr></table>
+      </td></tr>
+
+      <!-- EDIT (optional): the gift tag - ink card in a double gold frame, the half-gold "o" above -->
+      <tr><td class="pad" style="padding:40px 40px 0;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+          <td style="border:1px solid #84754E;padding:6px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+              <td align="center" style="border:1px solid #5b5238;padding:34px 30px;font-family:'Josefin Sans',Helvetica,Arial,sans-serif;">
+                <p class="c-gt" style="margin:0 0 16px;font-size:20px;line-height:1;color:#B6A274;">&#9680;</p>
+                <p style="margin:0 0 14px;font-size:14px;font-weight:300;letter-spacing:5px;text-transform:uppercase;color:#F4EFE7;"><span class="c-iv" style="color:#F4EFE7;">A gift that has to be</span> <em class="c-gt" style="font-family:'Bodoni Moda','Bodoni 72',Didot,Georgia,serif;font-style:italic;font-size:22px;letter-spacing:1px;text-transform:none;color:#B6A274;">perfect</em></p>
+                <p class="c-sd" style="margin:0 0 20px;font-size:15px;line-height:1.7;font-weight:300;color:#EAE3D7;">Our gift cards never expire. From $50 to $200, delivered by email with their own code.</p>
+                <a href="https://esotico.ca/shop/p/esotico-gift-card" class="c-gt" style="font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#B6A274;">Give an esotico gift card</a>
+              </td>
+            </tr></table>
+          </td>
+        </tr></table>
+      </td></tr>
+
+      <tr><td align="center" style="padding:44px 0 0;font-family:'Josefin Sans',Helvetica,Arial,sans-serif;font-size:15px;font-weight:300;letter-spacing:6px;text-transform:uppercase;color:#F4EFE7;">
+        <span class="c-iv" style="color:#F4EFE7;">Design your</span> <em class="c-gt" style="font-family:'Bodoni Moda','Bodoni 72',Didot,Georgia,serif;font-style:italic;font-size:22px;letter-spacing:1px;text-transform:none;color:#B6A274;">empire</em>
+      </td></tr>
+
+      <!-- footer: CASL identification + unsubscribe -->
+      <tr><td align="center" class="pad c-ft" style="padding:40px 40px 0;font-family:'Josefin Sans',Helvetica,Arial,sans-serif;font-size:11px;line-height:1.8;color:#8f8467;">
+        Esotico Lifestyle &middot; 1083 Queen Street, Suite 182, Halifax, Nova Scotia B3H 0B2, Canada<br>
+        <a href="mailto:hello@esotico.ca" class="c-ft" style="color:#8f8467;">hello@esotico.ca</a> &middot; <a href="https://esotico.ca" class="c-ft" style="color:#8f8467;">esotico.ca</a><br>
+        You're receiving this because you asked for esotico's news at esotico.ca.<br>
+        <a href="{$unsubscribe_link}" class="c-gt" style="color:#B6A274;">Unsubscribe</a>
+      </td></tr>
+
+    </table>
+  </td></tr>
+</table>
+</body>
+</html>

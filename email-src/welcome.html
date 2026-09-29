@@ -1,0 +1,101 @@
+<!doctype html>
+<!-- esotico welcome email (29 Sep 2026), for Sender.net: an automation email > Custom HTML.
+     Words: the owner-approved welcome (build doc "Page drafts" rev 32). Subject: Welcome to esotico. Preview: Be the first to know.
+     Look: the homepage hero ("the salon"): ink ground; the photo in an arch with a gilt frame and the half-gold ring behind
+     (baked into images/email/welcome-salon.jpg by make_email_heroes.py, so it shows the same in every mail app); a gold
+     label with the half-gold dot; tracked capitals with ONE Bodoni italic word in gilt; a gilt-hairline button.
+     Sender fills {{ firstname }} and {$unsubscribe_link}. -->
+<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="x-apple-disable-message-reformatting">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark">
+<title>Welcome to esotico</title>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&amp;family=Bodoni+Moda:ital,wght@1,400&amp;display=swap" rel="stylesheet">
+<style>
+
+  /* dark mode: the email is designed dark; Outlook.com / new Outlook mark what they recolour - put it back */
+  :root { color-scheme: light dark; supported-color-schemes: light dark; }
+  [data-ogsc] .c-iv { color: #F4EFE7 !important; }
+  [data-ogsc] .c-sd { color: #EAE3D7 !important; }
+  [data-ogsc] .c-gt { color: #B6A274 !important; }
+  [data-ogsc] .c-gd { color: #84754E !important; }
+  [data-ogsc] .c-ft { color: #8f8467 !important; }
+  [data-ogsc] .c-ink { color: #101820 !important; }
+  [data-ogsb] .b-ink { background-color: #101820 !important; }
+  [data-ogsb] .b-iv { background-color: #F4EFE7 !important; }
+  [data-ogsb] .b-wh { background-color: #ffffff !important; }
+  body { margin: 0; padding: 0; background-color: #101820; }
+  @media (max-width: 620px) {
+    .wrap { width: 100% !important; }
+    .pad { padding-left: 26px !important; padding-right: 26px !important; }
+    .h1 { font-size: 30px !important; letter-spacing: 5px !important; }
+    .h1 em { font-size: 36px !important; }
+  }
+</style>
+<!--[if mso]>
+<style>
+    /* classic Outlook: the ink comes from the VML background below; nothing on top of it may carry a colour */
+    table, td, div, a { background:transparent !important; background-color:transparent !important; }
+    /* the product panel is ink here, not ivory: its dark text turns ivory (a plain colour, no lock) */
+    .c-ink { color:#F4EFE7 !important; }
+    /* classic Outlook ignores padding on a link, so the button frame hugged the words (owner, 29 Sep):
+       the button's space moves to its cell */
+    .btn { padding:16px 38px !important; }
+</style>
+<![endif]-->
+</head>
+<body class="b-ink" style="margin:0;padding:0;background-color:#101820;">
+<!--[if gte mso 9]><v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t"><v:fill type="tile" color="#101820"/></v:background><![endif]-->
+<div class="c-ink" style="display:none;max-height:0;overflow:hidden;opacity:0;color:#101820;">Be the first to know.&#8199;&#65279;&#847;&#8199;&#65279;&#847;&#8199;&#65279;&#847;</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="b-ink" bgcolor="#101820" style="background-color:#101820;">
+  <tr><td align="center" style="padding:30px 0 40px;">
+    <table role="presentation" class="wrap b-ink" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#101820" style="width:600px;max-width:600px;background-color:#101820;">
+
+
+      <!-- the salon -->
+      <tr><td style="padding:0;">
+        <a href="https://esotico.ca" style="text-decoration:none;"><img src="https://esoticolifestyle.github.io/esotico/images/email/welcome-salon-mark.jpg" width="600" alt="esotico. Evelyne Prélonge faux fur throw and cushions in blush on a grey sofa, in an arched gold frame" style="display:block;width:600px;max-width:100%;height:auto;border:0;"></a>
+      </td></tr>
+
+      <tr><td class="pad" align="center" style="padding:10px 56px 0;font-family:'Josefin Sans',Helvetica,Arial,sans-serif;">
+        <p class="c-gt" style="margin:0 0 18px;font-size:11px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#B6A274;">&#9680;&nbsp;&nbsp;Welcome</p>
+        <h1 class="h1" style="margin:0 0 30px;font-size:36px;font-weight:300;letter-spacing:7px;line-height:1.25;text-transform:uppercase;color:#F4EFE7;"><span class="c-iv" style="color:#F4EFE7;">{% if firstname != blank %}{{ firstname }},{% endif %}</span> <em class="c-gt" style="font-family:'Bodoni Moda','Bodoni 72',Didot,Georgia,serif;font-style:italic;font-weight:400;font-size:44px;letter-spacing:1px;text-transform:none;color:#B6A274;">welcome</em><span class="c-iv" style="color:#F4EFE7;">.</span></h1>
+        <p class="c-sd" style="margin:0 0 22px;font-size:16px;line-height:1.75;font-weight:300;color:#EAE3D7;">You'll be the first to know when a new maison joins esotico, when new pieces arrive and when a favourite returns. We'll share gift ideas and the occasional private offer, and we'll write only when there's something worth your time.</p>
+      </td></tr>
+
+      <!-- the quote, between two gold hairlines, as on the site -->
+      <tr><td class="pad" align="center" style="padding:10px 56px 0;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+          <td align="center" class="c-gt" style="border-top:1px solid #5b5238;border-bottom:1px solid #5b5238;padding:22px 8px;font-family:'Bodoni Moda','Bodoni 72',Didot,Georgia,serif;font-style:italic;font-size:21px;line-height:1.5;color:#B6A274;">To some, a candle is just a candle. To us, it's the room you come home to.</td>
+        </tr></table>
+      </td></tr>
+
+      <tr><td class="pad" align="center" style="padding:30px 56px 0;font-family:'Josefin Sans',Helvetica,Arial,sans-serif;">
+        <p class="c-sd" style="margin:0 0 30px;font-size:16px;line-height:1.75;font-weight:300;color:#EAE3D7;">Until then, the whole collection is waiting at esotico.ca.</p>
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center"><tr>
+          <td class="btn" style="border:1px solid #B6A274;">
+            <a href="https://esotico.ca/shop" class="c-iv" style="display:inline-block;padding:16px 38px;font-family:'Josefin Sans',Helvetica,Arial,sans-serif;font-size:12px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#F4EFE7;text-decoration:none;">Explore the collection</a>
+          </td>
+        </tr></table>
+      </td></tr>
+
+      <tr><td align="center" style="padding:44px 0 0;font-family:'Josefin Sans',Helvetica,Arial,sans-serif;font-size:15px;font-weight:300;letter-spacing:6px;text-transform:uppercase;color:#F4EFE7;">
+        <span class="c-iv" style="color:#F4EFE7;">Design your</span> <em class="c-gt" style="font-family:'Bodoni Moda','Bodoni 72',Didot,Georgia,serif;font-style:italic;font-size:22px;letter-spacing:1px;text-transform:none;color:#B6A274;">empire</em>
+      </td></tr>
+
+      <!-- footer: CASL identification + unsubscribe -->
+      <tr><td align="center" class="pad c-ft" style="padding:40px 40px 0;font-family:'Josefin Sans',Helvetica,Arial,sans-serif;font-size:11px;line-height:1.8;color:#8f8467;">
+        Esotico Lifestyle &middot; 1083 Queen Street, Suite 182, Halifax, Nova Scotia B3H 0B2, Canada<br>
+        <a href="mailto:hello@esotico.ca" class="c-ft" style="color:#8f8467;">hello@esotico.ca</a> &middot; <a href="https://esotico.ca" class="c-ft" style="color:#8f8467;">esotico.ca</a><br>
+        You're receiving this because you asked for esotico's news at esotico.ca.<br>
+        <a href="{$unsubscribe_link}" class="c-gt" style="color:#B6A274;">Unsubscribe</a>
+      </td></tr>
+
+    </table>
+  </td></tr>
+</table>
+</body>
+</html>
