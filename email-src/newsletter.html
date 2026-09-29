@@ -41,8 +41,11 @@
 <style>
     /* classic Outlook: the ink comes from the VML background below; nothing on top of it may carry a colour */
     table, td, div, a { background:transparent !important; background-color:transparent !important; }
-    /* the product panel is ink here, not ivory: its dark text turns ivory (a plain colour, no lock) */
-    .c-ink { color:#F4EFE7 !important; }
+    /* classic Outlook shows a colour as is in its light view and INVERTED in its dark view (probe 2, owner's
+       screenshots 29 Sep: ivory 15.6:1 light but 1.2:1 dark). Only a mid-tone reads in both: #8f8467
+       measured 4.8:1 light and 4.9:1 dark, the best of ten. Light text (and the product panel's text,
+       which sits on ink here) takes it in classic Outlook only; every other app keeps the ivory. */
+    .c-iv, .c-sd, .c-ink { color:#8f8467 !important; }
     /* classic Outlook ignores padding on a link, so the button frame hugged the words (owner, 29 Sep):
        the button's space moves to its cell */
     .btn { padding:16px 38px !important; }
