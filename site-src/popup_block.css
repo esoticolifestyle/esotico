@@ -61,9 +61,10 @@
   position: absolute !important; top: 16px !important; right: 16px !important; z-index: 3; color: var(--gilt) !important;
 }
 @media (max-width: 640px) {
-  /* the card floats inside the screen so its gilt frame hangs in the air around it, as on the desktop (owner, 29 Sep) */
+  /* the card floats inside the screen so its gilt frame hangs in the air around it, as on the desktop (owner, 29 Sep).
+     calc() is escaped (~"") because the site compiler, LESS 1.3.3, evaluates it and wrote calc(68%) (served v49). */
   .sqs-slide-wrapper[data-slide-type="popup-overlay"] .sqs-slide-layer-content {
-    width: calc(100% - 32px) !important; max-width: calc(100% - 32px) !important; box-sizing: border-box;
+    width: ~"calc(100% - 32px)" !important; max-width: ~"calc(100% - 32px)" !important; box-sizing: border-box;
     margin: 0 16px 20px !important;
   }
   .sqs-slide-wrapper[data-slide-type="popup-overlay"] .input-wrapper { flex-direction: column; align-items: stretch; gap: 16px; }
