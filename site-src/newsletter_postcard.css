@@ -34,6 +34,13 @@
   .fe-block-3c592271fec3ddcc428a h2 { text-align: center !important; font-size: clamp(1.2rem, 5.2vw, 1.6rem) !important; padding: 0 34px; }
   .fe-block-3c592271fec3ddcc428a h2::before { margin: 0 auto 20px; }
   .fe-block-146eebe68a285a66bcba .newsletter-form-field-element { max-width: 240px; display: block; margin-left: auto !important; margin-right: auto !important; }
+  /* phones: the same label as the desktop postcard, and the small print kept off the inner frame */
+  .fe-block-3c592271fec3ddcc428a h2::before {
+    content: "◐  The esotico letter"; width: auto; height: auto; border: 0; border-radius: 0; background: none;
+    font: 600 10px/16px 'Josefin Sans', sans-serif; letter-spacing: .3em; text-transform: uppercase; color: var(--gilt);
+  }
+  .fe-block-146eebe68a285a66bcba .newsletter-form-header-description p { padding: 0 26px; }
+  .fe-block-146eebe68a285a66bcba .newsletter-form-footnote { padding: 0 30px; }
 }
 @media screen and (min-width: 768px) {
   /* the photograph, the divider and the postmark */
