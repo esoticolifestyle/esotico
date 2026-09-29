@@ -1,0 +1,73 @@
+/* the sign-up pop-up (29 Sep): Squarespace's Promotional Pop-Up, dressed as the salon. The owner chose no incentive
+   ("be the first to know"); it opens after 10 s or half a page, once per 30 days, never again after a sign-up
+   (Display & Timing). An ink card: the salon (arch, gilt frame, half-gold ring, baked for the welcome email) on the left,
+   tracked capitals and a gilt-hairline button on the right, the site's gilt frame 14 px outside. Phones get Squarespace's
+   half-page panel (its mobile style, kept for Google's interstitial rules) without the picture. */
+.sqs-slide-wrapper[data-slide-type="popup-overlay"] .sqs-slide { background-color: rgba(10, 15, 21, .62) !important; }
+.sqs-slide-wrapper[data-slide-type="popup-overlay"] .sqs-slide-layer-content {
+  background: var(--ink) !important; max-width: 760px !important; width: 88vw !important;
+  display: flex !important; align-items: stretch; padding: 0 !important; position: relative; overflow: visible !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .45);
+}
+.sqs-slide-wrapper[data-slide-type="popup-overlay"] .sqs-slide-layer-content::before {
+  content: ""; flex: 0 0 42%; min-height: 470px;
+  background: var(--ink) url(https://esoticolifestyle.github.io/esotico/images/email/welcome-salon.jpg) center / cover no-repeat;
+}
+.sqs-slide-wrapper[data-slide-type="popup-overlay"] .sqs-slide-layer-content::after {
+  content: ""; position: absolute; top: -14px; right: -14px; bottom: -14px; left: -14px;
+  border: 1px solid rgba(182, 162, 116, .75); pointer-events: none;
+}
+.sqs-slide-wrapper[data-slide-type="popup-overlay"] .group-copy {
+  flex: 1 1 58%; min-width: 0; box-sizing: border-box; padding: 58px 48px 44px !important; background: transparent !important; text-align: left !important;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.sqs-slide-wrapper[data-slide-type="popup-overlay"] .group-copy::before {
+  content: "◐  esotico"; display: block; margin-bottom: 18px;
+  font: 600 11px/1 'Josefin Sans', sans-serif; letter-spacing: .32em; text-transform: uppercase; color: var(--gilt);
+}
+.sqs-slide-wrapper[data-slide-type="popup-overlay"] h1 {
+  font: 300 23px/1.4 'Josefin Sans', sans-serif !important; letter-spacing: .16em !important; text-transform: uppercase !important;
+  color: var(--ivory) !important; margin: 0 0 18px !important; text-align: left !important;
+}
+.sqs-slide-wrapper[data-slide-type="popup-overlay"] [data-slice-type="body"] p {
+  font: 300 15px/1.7 'Josefin Sans', sans-serif !important; letter-spacing: .02em !important;
+  color: var(--sand) !important; text-align: left !important; margin: 0 0 26px !important;
+}
+.sqs-slide-wrapper[data-slide-type="popup-overlay"] .actions { margin: 0 !important; }
+.sqs-slide-wrapper[data-slide-type="popup-overlay"] .input-wrapper { display: flex !important; gap: 14px; align-items: flex-end; }
+.sqs-slide-wrapper[data-slide-type="popup-overlay"] .form-item.email { flex: 1 1 auto; min-width: 0; margin: 0 !important; }
+.sqs-slide-wrapper[data-slide-type="popup-overlay"] input.field-element {
+  background: transparent !important; border: 0 !important; border-bottom: 1px solid var(--gilt) !important; border-radius: 0 !important;
+  color: var(--ivory) !important; font: 300 15px 'Josefin Sans', sans-serif !important; letter-spacing: .04em;
+  padding: 12px 2px !important; width: 100% !important; box-shadow: none !important;
+}
+.sqs-slide-wrapper[data-slide-type="popup-overlay"] input.field-element::placeholder { color: rgba(234, 227, 215, .55) !important; }
+.sqs-slide-wrapper[data-slide-type="popup-overlay"] button[type="submit"] {
+  background: transparent !important; border: 1px solid var(--gilt) !important; border-radius: 0 !important;
+  color: var(--ivory) !important; padding: 13px 22px !important; cursor: pointer;
+  font: 600 11px 'Josefin Sans', sans-serif !important; letter-spacing: .28em !important; text-transform: uppercase !important;
+  transition: background-color .3s ease, color .3s ease;
+}
+.sqs-slide-wrapper[data-slide-type="popup-overlay"] button[type="submit"]:hover,
+.sqs-slide-wrapper[data-slide-type="popup-overlay"] button[type="submit"]:focus-visible { background: var(--gilt) !important; color: var(--ink) !important; }
+.sqs-slide-wrapper[data-slide-type="popup-overlay"] .form-disclaimer-text p {
+  font: 300 11px/1.6 'Josefin Sans', sans-serif !important; color: rgba(234, 227, 215, .6) !important;
+  text-align: left !important; margin: 16px 0 0 !important;
+}
+.sqs-slide-wrapper[data-slide-type="popup-overlay"] .form-submission-text p {
+  font: 300 16px/1.6 'Josefin Sans', sans-serif !important; color: var(--sand) !important; text-align: left !important;
+}
+.sqs-slide-wrapper[data-slide-type="popup-overlay"] .sqs-popup-overlay-close {
+  position: absolute !important; top: 16px !important; right: 16px !important; z-index: 3; color: var(--gilt) !important;
+}
+@media (max-width: 640px) {
+  .sqs-slide-wrapper[data-slide-type="popup-overlay"] .sqs-slide-layer-content { width: 100% !important; max-width: 100% !important; box-sizing: border-box; }
+  .sqs-slide-wrapper[data-slide-type="popup-overlay"] .input-wrapper { flex-direction: column; align-items: stretch; gap: 16px; }
+  .sqs-slide-wrapper[data-slide-type="popup-overlay"] button[type="submit"] { width: 100%; }
+  .sqs-slide-wrapper[data-slide-type="popup-overlay"] .sqs-slide-layer-content::before { display: none; }
+  .sqs-slide-wrapper[data-slide-type="popup-overlay"] .sqs-slide-layer-content::after { top: 8px; right: 8px; bottom: 8px; left: 8px; }
+  .sqs-slide-wrapper[data-slide-type="popup-overlay"] .group-copy { padding: 34px 28px 28px !important; }
+  .sqs-slide-wrapper[data-slide-type="popup-overlay"] h1 { font-size: 19px !important; }
+  .sqs-slide-wrapper[data-slide-type="popup-overlay"] [data-slice-type="body"] p { font-size: 14px !important; margin-bottom: 18px !important; }
+}
+
