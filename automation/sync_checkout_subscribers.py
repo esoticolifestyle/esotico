@@ -2,7 +2,7 @@
 
 Buyers who tick "keep me informed" at checkout become Squarespace contacts with acceptsMarketing = true. Sender.net (the
 free email tool) has no Squarespace connection, so this runs on a schedule (GitHub Actions, .github/workflows/) and:
-  1. asks Squarespace's Contacts API for contacts who opted in to marketing within the last LOOKBACK_DAYS;
+  1. reads Squarespace's contact list and keeps those who opted in to marketing in the last LOOKBACK_DAYS;
   2. for each one, asks Sender whether that email already exists - if it does (active, unsubscribed or bounced), it is
      LEFT ALONE, so nobody who unsubscribed in Sender is ever re-added (Canada's anti-spam law, CASL);
   3. adds the new ones to the Sender group named SENDER_GROUP (found by its title), which starts the welcome email.
@@ -17,7 +17,7 @@ Environment (GitHub repository secrets):
                         watches this group
   LOOKBACK_DAYS         optional, default 3
   DRY_RUN               optional, "1" = report what would be added, add nothing
-Sources: developers.squarespace.com/commerce-apis/contacts (POST /v1/contacts/query, acceptsMarketingWithDate);
+Sources: developers.squarespace.com/commerce-apis/contacts (GET /v1/contacts; the filtered POST /v1/contacts/query refuses read-only keys);
 api.sender.net (GET /v2/groups, GET /v2/subscribers/{email}, POST /v2/subscribers)."""
 import datetime as dt
 import json
@@ -28,7 +28,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-SQ = os.environ.get("SQ_URL", "https://api.squarespace.com/v1/contacts/query")      # override: tests only
+SQ = os.environ.get("SQ_URL", "https://api.squarespace.com/v1/contacts")      # override: tests only
 SENDER = os.environ.get("SENDER_URL", "https://api.sender.net/v2/subscribers")  # override: tests only
 GROUPS = os.environ.get("SENDER_GROUPS_URL", "https://api.sender.net/v2/groups")  # override: tests only
 UA = "esotico-subscriber-sync/1.0 (hello@esotico.ca)"
@@ -57,28 +57,30 @@ def call(method, url, token, body=None, tries=5):
 
 
 def squarespace_opt_ins(key, since):
-    body = {"acceptsMarketingWithDate": {"acceptsMarketing": True, "joinedOn": {
-        "after": since.strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "before": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}},
-        "pageSize": 1000, "sortField": "ACCEPTS_MARKETING_JOINED_ON", "sortDirection": "ASCENDING"}
-    out = []
+    # The plain list (GET /v1/contacts), filtered here: a read-only key is refused by the filtered search
+    # (POST /v1/contacts/query answered 403 AUTHORIZATION_ERROR on 29 Sep 2026 while this list answered 200).
+    out, cursor = [], None
     while True:
-        status, page = call("POST", SQ, key, body)
+        url = SQ + "?pageSize=1000" + (f"&cursor={urllib.parse.quote(cursor, safe='')}" if cursor else "")
+        status, page = call("GET", url, key)
         if status != 200:
             why = {k: page.get(k) for k in ("type", "subtype", "message", "detail", "title") if page.get(k)}
-            probe, _ = call("GET", SQ.rsplit("/", 1)[0] + "?pageSize=1", key)   # the plain list, same permission
-            sys.exit(f"Squarespace Contacts API answered {status} {why}; plain list answered {probe}. "
-                     "Check SQUARESPACE_API_KEY and its Contacts permission")
+            sys.exit(f"Squarespace Contacts API answered {status} {why}; "
+                     "check SQUARESPACE_API_KEY and its Contacts (Read Only) permission")
         for c in page.get("contacts", []):
             pe = c.get("primaryEmail") or {}
             am = pe.get("acceptsMarketing") or {}
-            if pe.get("email") and am.get("acceptsMarketing") and not am.get("leftOn"):
-                out.append({"email": pe["email"].strip().lower(),
-                            "firstname": c.get("firstName") or "", "lastname": c.get("lastName") or ""})
-        nxt = (page.get("pagination") or {}).get("nextPageCursor")
-        if not (page.get("pagination") or {}).get("hasNextPage") or not nxt:
+            joined = am.get("joinedOn")
+            if not (pe.get("email") and am.get("acceptsMarketing") and not am.get("leftOn") and joined):
+                continue
+            if dt.datetime.fromisoformat(joined.replace("Z", "+00:00")) < since:
+                continue
+            out.append({"email": pe["email"].strip().lower(),
+                        "firstname": c.get("firstName") or "", "lastname": c.get("lastName") or ""})
+        pg = page.get("pagination") or {}
+        cursor = pg.get("nextPageCursor")
+        if not pg.get("hasNextPage") or not cursor:
             return out
-        body["cursor"] = nxt
 
 
 def sender_group_id(token, title):
