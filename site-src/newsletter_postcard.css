@@ -1,0 +1,70 @@
+/* the newsletter (homepage) as a POSTCARD from the salon (29 Sep; the owner: "way too empty ... make it look like a
+   postcard"). Desktop: the candlestick salon (arch, gilt frame, half-gold ring, baked for the October letter on the same
+   ink, so it melts into the card) on the left; a gilt hairline down the middle like the back of a postcard; on the right
+   "◐ The esotico letter", the title, the invitation and the form, set flush left like a written card; a gilt postmark
+   (ESOTICO ◐ HALIFAX, make_postmark.py) franks the top right corner. The double frame of the old gift tag is kept:
+   one border and an outline 7 px inside it, so ::before is free for the photograph. Phones: the stack, centred. */
+.fe-block-60608d066275f348e180 { position: relative; overflow: hidden; }
+.fe-block-60608d066275f348e180::after {
+  content: ""; position: absolute; z-index: 2; pointer-events: none; inset: 14px;
+  border: 1px solid rgba(182,162,116,.6); outline: 1px solid rgba(182,162,116,.3); outline-offset: -7px;
+}
+.fe-block-3c592271fec3ddcc428a h2 { color: var(--ivory) !important; font-size: clamp(1.8rem, 2.6vw, 2.7rem) !important; line-height: 1.25 !important; }
+.fe-block-3c592271fec3ddcc428a h2::before {
+  content: ""; display: block; width: 20px; height: 20px; margin: 0 0 24px; border: 1px solid var(--gilt); border-radius: 50%;
+  background: linear-gradient(90deg, var(--gilt) 50%, transparent 50%);
+}
+.fe-block-146eebe68a285a66bcba .newsletter-form-header-description p,
+.fe-block-146eebe68a285a66bcba .newsletter-form-footnote p,
+.fe-block-146eebe68a285a66bcba .newsletter-form-field-label { color: rgba(244,239,231,.8) !important; }
+.fe-block-146eebe68a285a66bcba .newsletter-form-footnote a { color: var(--gilt) !important; }
+.fe-block-146eebe68a285a66bcba .newsletter-form-fields-wrapper,
+.fe-block-146eebe68a285a66bcba .newsletter-form-field-wrapper { width: min(360px, 100%); margin-left: auto; margin-right: auto; }
+.fe-block-146eebe68a285a66bcba .newsletter-form-field-element {
+  width: 100% !important; text-align: center !important; letter-spacing: .08em;
+  background: transparent !important; color: var(--ivory) !important; border: 0 !important; border-bottom: 1px solid rgba(182,162,116,.7) !important;
+}
+.fe-block-146eebe68a285a66bcba .newsletter-form-field-element::placeholder { color: rgba(244,239,231,.55) !important; text-align: center; }
+.fe-block-146eebe68a285a66bcba .newsletter-form-button {
+  min-width: 220px; background: transparent !important; color: var(--ivory) !important; border: 1px solid var(--gilt) !important; border-radius: 0 !important;
+  letter-spacing: .24em !important; transition: background .4s ease, color .4s ease;
+}
+.fe-block-146eebe68a285a66bcba .newsletter-form-button:hover { background: var(--gilt) !important; color: var(--ink) !important; }
+@media screen and (max-width: 767px) {
+  .fe-block-3c592271fec3ddcc428a h2 { text-align: center !important; font-size: clamp(1.2rem, 5.2vw, 1.6rem) !important; padding: 0 34px; }
+  .fe-block-3c592271fec3ddcc428a h2::before { margin: 0 auto 20px; }
+  .fe-block-146eebe68a285a66bcba .newsletter-form-field-element { max-width: 240px; display: block; margin-left: auto !important; margin-right: auto !important; }
+}
+@media screen and (min-width: 768px) {
+  /* the photograph, the divider and the postmark */
+  .fe-block-60608d066275f348e180::before {
+    content: ""; position: absolute; z-index: 1; pointer-events: none; left: 5%; top: 8%; bottom: 8%; width: 38%;
+    background: url(https://esoticolifestyle.github.io/esotico/images/email/october-salon.jpg) center / contain no-repeat;
+  }
+  .fe-block-60608d066275f348e180::after {
+    background:
+      url(https://esoticolifestyle.github.io/esotico/images/site/postmark.png) right 34px top 26px / 176px auto no-repeat,
+      linear-gradient(rgba(182,162,116,.35), rgba(182,162,116,.35)) 47% 50% / 1px 70% no-repeat;
+  }
+  /* the right half of the card: title, invitation and form, flush left */
+  .fe-block-3c592271fec3ddcc428a { grid-area: 6 / 14 / 10 / 25 !important; }
+  .fe-block-146eebe68a285a66bcba { grid-area: 10 / 14 / 19 / 25 !important; }
+  .fe-block-3c592271fec3ddcc428a h2 { text-align: left !important; }
+  .fe-block-3c592271fec3ddcc428a h2::before {
+    content: "◐  The esotico letter"; width: auto; height: auto; border: 0; border-radius: 0; margin: 0 0 20px; background: none;
+    font: 600 11px/16px 'Josefin Sans', sans-serif; letter-spacing: .32em; text-transform: uppercase; color: var(--gilt);
+  }
+  .fe-block-146eebe68a285a66bcba .newsletter-form-header-description p {
+    text-align: left !important; font-size: 16px !important; line-height: 1.75 !important; color: var(--sand) !important;
+    max-width: 30em; margin: 0 0 8px !important;
+  }
+  .fe-block-146eebe68a285a66bcba .newsletter-form-body { align-items: flex-start !important; }
+  .fe-block-146eebe68a285a66bcba .newsletter-form-fields-wrapper,
+  .fe-block-146eebe68a285a66bcba .newsletter-form-field-wrapper { width: min(420px, 100%); margin-left: 0; margin-right: 0; }
+  .fe-block-146eebe68a285a66bcba .newsletter-form-field-element,
+  .fe-block-146eebe68a285a66bcba .newsletter-form-field-element::placeholder { text-align: left !important; }
+  .fe-block-146eebe68a285a66bcba .newsletter-form-button-wrapper { justify-content: flex-start !important; text-align: left !important; }
+  .fe-block-146eebe68a285a66bcba .newsletter-form-footnote p { text-align: left !important; max-width: 36em; }
+  .fe-block-146eebe68a285a66bcba .captcha-container { text-align: left !important; }
+}
+
