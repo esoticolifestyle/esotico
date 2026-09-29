@@ -61,11 +61,15 @@
   position: absolute !important; top: 16px !important; right: 16px !important; z-index: 3; color: var(--gilt) !important;
 }
 @media (max-width: 640px) {
-  .sqs-slide-wrapper[data-slide-type="popup-overlay"] .sqs-slide-layer-content { width: 100% !important; max-width: 100% !important; box-sizing: border-box; }
+  /* the card floats inside the screen so its gilt frame hangs in the air around it, as on the desktop (owner, 29 Sep) */
+  .sqs-slide-wrapper[data-slide-type="popup-overlay"] .sqs-slide-layer-content {
+    width: calc(100% - 32px) !important; max-width: calc(100% - 32px) !important; box-sizing: border-box;
+    margin: 0 16px 20px !important;
+  }
   .sqs-slide-wrapper[data-slide-type="popup-overlay"] .input-wrapper { flex-direction: column; align-items: stretch; gap: 16px; }
   .sqs-slide-wrapper[data-slide-type="popup-overlay"] button[type="submit"] { width: 100%; }
   .sqs-slide-wrapper[data-slide-type="popup-overlay"] .sqs-slide-layer-content::before { display: none; }
-  .sqs-slide-wrapper[data-slide-type="popup-overlay"] .sqs-slide-layer-content::after { top: 8px; right: 8px; bottom: 8px; left: 8px; }
+  .sqs-slide-wrapper[data-slide-type="popup-overlay"] .sqs-slide-layer-content::after { top: -8px; right: -8px; bottom: -8px; left: -8px; }
   .sqs-slide-wrapper[data-slide-type="popup-overlay"] .group-copy { padding: 34px 28px 28px !important; }
   .sqs-slide-wrapper[data-slide-type="popup-overlay"] h1 { font-size: 19px !important; }
   .sqs-slide-wrapper[data-slide-type="popup-overlay"] [data-slice-type="body"] p { font-size: 14px !important; margin-bottom: 18px !important; }
