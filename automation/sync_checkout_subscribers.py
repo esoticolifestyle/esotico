@@ -65,7 +65,10 @@ def squarespace_opt_ins(key, since):
     while True:
         status, page = call("POST", SQ, key, body)
         if status != 200:
-            sys.exit(f"Squarespace Contacts API answered {status}; check SQUARESPACE_API_KEY and its Contacts permission")
+            why = {k: page.get(k) for k in ("type", "subtype", "message", "detail", "title") if page.get(k)}
+            probe, _ = call("GET", SQ.rsplit("/", 1)[0] + "?pageSize=1", key)   # the plain list, same permission
+            sys.exit(f"Squarespace Contacts API answered {status} {why}; plain list answered {probe}. "
+                     "Check SQUARESPACE_API_KEY and its Contacts permission")
         for c in page.get("contacts", []):
             pe = c.get("primaryEmail") or {}
             am = pe.get("acceptsMarketing") or {}
