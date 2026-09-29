@@ -1,85 +1,84 @@
 /* the newsletter (homepage) as a POSTCARD from the salon (29 Sep; the owner: "way too empty ... make it look like a
-   postcard"). Desktop: the candlestick salon (arch, gilt frame, half-gold ring, baked for the October letter on the same
-   ink, so it melts into the card) on the left; a gilt hairline down the middle like the back of a postcard; on the right
-   "◐ The esotico letter", the title, the invitation and the form, set flush left like a written card; a gilt postmark
-   (ESOTICO ◐ HALIFAX, make_postmark.py) franks the top right corner. The double frame of the old gift tag is kept:
-   one border and an outline 7 px inside it, so ::before is free for the photograph. Phones: the stack, centred. */
-.fe-block-60608d066275f348e180 { position: relative; overflow: hidden; }
+   postcard"; then: the candlestick photo repeated the Our story section above, and an ink card read too close to it).
+   So the card is the BACK of a postcard on ivory paper, lying on the sand band with a soft shadow: the message on the
+   left ("◐ The esotico letter", the title, the invitation, the email line and the button, flush left like a written
+   card), a gold hairline down the middle, and the address side on the right: a perforated stamp (the Ethnicraft bronze
+   tray, make_stamp.py) franked by the gold postmark (ESOTICO ◐ HALIFAX, make_postmark.py gold) above three gold address
+   lines. The paper is the card's ::before (it covers the ink shape); the double frame is one border plus an outline
+   7 px inside it on ::after, which also carries the stamp, the postmark, the divider and the lines.
+   Longhands only: the site compiler (LESS 1.3.3) reads "a / b" between numbers as a division. */
+.fe-block-60608d066275f348e180 { position: relative; overflow: visible !important; }
+.fe-block-60608d066275f348e180::before {
+  content: ""; position: absolute; z-index: 1; pointer-events: none; top: 0; right: 0; bottom: 0; left: 0;
+  background-color: var(--ivory); box-shadow: 0 24px 60px rgba(16,24,32,.14), 0 2px 6px rgba(16,24,32,.06);
+}
 .fe-block-60608d066275f348e180::after {
-  content: ""; position: absolute; z-index: 2; pointer-events: none; inset: 14px;
-  border: 1px solid rgba(182,162,116,.6); outline: 1px solid rgba(182,162,116,.3); outline-offset: -7px;
+  content: ""; position: absolute; z-index: 2; pointer-events: none; top: 14px; right: 14px; bottom: 14px; left: 14px;
+  border: 1px solid rgba(132,117,78,.55); outline: 1px solid rgba(132,117,78,.28); outline-offset: -7px;
 }
-.fe-block-3c592271fec3ddcc428a h2 { color: var(--ivory) !important; font-size: clamp(1.8rem, 2.6vw, 2.7rem) !important; line-height: 1.25 !important; }
+/* the message, in ink on paper */
+.fe-block-3c592271fec3ddcc428a h2 { color: var(--ink) !important; font-size: clamp(1.8rem, 2.6vw, 2.7rem) !important; line-height: 1.25 !important; text-align: left !important; }
+.fe-block-3c592271fec3ddcc428a h2 em { color: var(--gold) !important; }
 .fe-block-3c592271fec3ddcc428a h2::before {
-  content: ""; display: block; width: 20px; height: 20px; margin: 0 0 24px; border: 1px solid var(--gilt); border-radius: 50%;
-  background: linear-gradient(90deg, var(--gilt) 50%, transparent 50%);
+  content: "◐  The esotico letter"; display: block; margin: 0 0 20px;
+  font: 600 11px/16px 'Josefin Sans', sans-serif; letter-spacing: .32em; text-transform: uppercase; color: var(--gold);
 }
-.fe-block-146eebe68a285a66bcba .newsletter-form-header-description p,
-.fe-block-146eebe68a285a66bcba .newsletter-form-footnote p,
-.fe-block-146eebe68a285a66bcba .newsletter-form-field-label { color: rgba(244,239,231,.8) !important; }
-.fe-block-146eebe68a285a66bcba .newsletter-form-footnote a { color: var(--gilt) !important; }
+.fe-block-146eebe68a285a66bcba .newsletter-form-header,
+.fe-block-146eebe68a285a66bcba .newsletter-form-body { align-items: flex-start !important; text-align: left !important; }
+.fe-block-146eebe68a285a66bcba .newsletter-form-header,
+.fe-block-146eebe68a285a66bcba .newsletter-form-header-description { margin-left: 0 !important; margin-right: auto !important; }
+.fe-block-146eebe68a285a66bcba .newsletter-form-header-description p {
+  text-align: left !important; font-size: 16px !important; line-height: 1.75 !important; color: var(--smoke) !important;
+  max-width: 30em; margin: 0 0 8px !important;
+}
 .fe-block-146eebe68a285a66bcba .newsletter-form-fields-wrapper,
-.fe-block-146eebe68a285a66bcba .newsletter-form-field-wrapper { width: min(360px, 100%); margin-left: auto; margin-right: auto; }
+.fe-block-146eebe68a285a66bcba .newsletter-form-field-wrapper { width: min(400px, 100%); margin-left: 0; margin-right: 0; }
+.fe-block-146eebe68a285a66bcba .newsletter-form-field-label { color: var(--smoke) !important; }
 .fe-block-146eebe68a285a66bcba .newsletter-form-field-element {
-  width: 100% !important; text-align: center !important; letter-spacing: .08em;
-  background: transparent !important; color: var(--ivory) !important; border: 0 !important; border-bottom: 1px solid rgba(182,162,116,.7) !important;
+  width: 100% !important; text-align: left !important; letter-spacing: .08em; padding-left: 0 !important;
+  background: transparent !important; color: var(--ink) !important; border: 0 !important; border-bottom: 1px solid rgba(132,117,78,.8) !important;
 }
-.fe-block-146eebe68a285a66bcba .newsletter-form-field-element::placeholder { color: rgba(244,239,231,.55) !important; text-align: center; }
+.fe-block-146eebe68a285a66bcba .newsletter-form-field-element::placeholder { color: rgba(94,90,85,.8) !important; text-align: left; }
+.fe-block-146eebe68a285a66bcba .newsletter-form-button-wrapper { justify-content: flex-start !important; text-align: left !important; }
 .fe-block-146eebe68a285a66bcba .newsletter-form-button {
-  min-width: 220px; background: transparent !important; color: var(--ivory) !important; border: 1px solid var(--gilt) !important; border-radius: 0 !important;
+  min-width: 220px; background: transparent !important; color: var(--ink) !important; border: 1px solid var(--gold) !important; border-radius: 0 !important;
   letter-spacing: .24em !important; transition: background .4s ease, color .4s ease;
 }
-.fe-block-146eebe68a285a66bcba .newsletter-form-button:hover { background: var(--gilt) !important; color: var(--ink) !important; }
+.fe-block-146eebe68a285a66bcba .newsletter-form-button:hover { background: var(--ink) !important; color: var(--ivory) !important; border-color: var(--ink) !important; }
+.fe-block-146eebe68a285a66bcba .newsletter-form-footnote p { text-align: left !important; max-width: 36em; color: rgba(94,90,85,.95) !important; }
+.fe-block-146eebe68a285a66bcba .newsletter-form-footnote a { color: var(--gold) !important; }
+.fe-block-146eebe68a285a66bcba .form-submission-text, .fe-block-146eebe68a285a66bcba .form-submission-text p { color: var(--ink) !important; text-align: left !important; }
+.fe-block-146eebe68a285a66bcba .captcha-container { text-align: left !important; }
+@media screen and (min-width: 768px) {
+  /* the address side: stamp, postmark, the middle divider, three address lines */
+  .fe-block-60608d066275f348e180::after {
+    background-image: url(https://esoticolifestyle.github.io/esotico/images/site/postmark-gold.png),
+      url(https://esoticolifestyle.github.io/esotico/images/site/stamp.png),
+      linear-gradient(rgba(132,117,78,.35), rgba(132,117,78,.35)),
+      linear-gradient(rgba(132,117,78,.45), rgba(132,117,78,.45)),
+      linear-gradient(rgba(132,117,78,.45), rgba(132,117,78,.45)),
+      linear-gradient(rgba(132,117,78,.45), rgba(132,117,78,.45));
+    background-position: right 134px top 128px, right 22px top 16px, 52% 50%, right 34px top 62%, right 34px top 72%, right 34px top 82%;
+    background-size: 190px auto, 164px auto, 1px 72%, 38% 1px, 38% 1px, 38% 1px;
+    background-repeat: no-repeat;
+  }
+  /* the message side: the title, then the invitation and the form, on the left half of the card */
+  .fe-block-3c592271fec3ddcc428a { grid-row-start: 5 !important; grid-row-end: 9 !important; grid-column-start: 4 !important; grid-column-end: 13 !important; }
+  .fe-block-146eebe68a285a66bcba { grid-row-start: 9 !important; grid-row-end: 19 !important; grid-column-start: 4 !important; grid-column-end: 13 !important; }
+}
 @media screen and (max-width: 767px) {
   .fe-block-3c592271fec3ddcc428a h2 { text-align: center !important; font-size: clamp(1.2rem, 5.2vw, 1.6rem) !important; padding: 0 34px; }
-  .fe-block-3c592271fec3ddcc428a h2::before { margin: 0 auto 20px; }
-  .fe-block-146eebe68a285a66bcba .newsletter-form-field-element { max-width: 240px; display: block; margin-left: auto !important; margin-right: auto !important; }
-  /* phones: the same label as the desktop postcard, and the small print kept off the inner frame */
-  .fe-block-3c592271fec3ddcc428a h2::before {
-    content: "◐  The esotico letter"; width: auto; height: auto; border: 0; border-radius: 0; background: none;
-    font: 600 10px/16px 'Josefin Sans', sans-serif; letter-spacing: .3em; text-transform: uppercase; color: var(--gilt);
-  }
-  .fe-block-146eebe68a285a66bcba .newsletter-form-header-description p { padding: 0 26px; }
-  .fe-block-146eebe68a285a66bcba .newsletter-form-footnote { padding: 0 30px; }
-}
-@media screen and (min-width: 768px) {
-  /* the photograph, the divider and the postmark */
-  .fe-block-60608d066275f348e180::before {
-    content: ""; position: absolute; z-index: 1; pointer-events: none; left: 4%; top: 6%; bottom: 6%; width: 40%;
-    background: url(https://esoticolifestyle.github.io/esotico/images/email/october-salon.jpg) center / contain no-repeat;
-  }
-  /* longhands only: the site compiler (LESS 1.3.3) reads "a / b" between numbers as a division (v51 served
-     grid-area:.00171429 and "top .14772727px"), so no slash shorthand in this block */
-  .fe-block-60608d066275f348e180::after {
-    background-image: url(https://esoticolifestyle.github.io/esotico/images/site/postmark.png),
-      linear-gradient(rgba(182,162,116,.35), rgba(182,162,116,.35));
-    background-position: right 26px top 20px, 47% 50%;
-    background-size: 150px auto, 1px 70%;
-    background-repeat: no-repeat, no-repeat;
-  }
-  /* the right half of the card: title, invitation and form, flush left */
-  .fe-block-3c592271fec3ddcc428a { grid-row-start: 6 !important; grid-row-end: 10 !important; grid-column-start: 14 !important; grid-column-end: 25 !important; }
-  .fe-block-146eebe68a285a66bcba { grid-row-start: 10 !important; grid-row-end: 19 !important; grid-column-start: 14 !important; grid-column-end: 25 !important; }
-  .fe-block-3c592271fec3ddcc428a h2 { text-align: left !important; }
-  .fe-block-3c592271fec3ddcc428a h2::before {
-    content: "◐  The esotico letter"; width: auto; height: auto; border: 0; border-radius: 0; margin: 0 0 20px; background: none;
-    font: 600 11px/16px 'Josefin Sans', sans-serif; letter-spacing: .32em; text-transform: uppercase; color: var(--gilt);
-  }
-  .fe-block-146eebe68a285a66bcba .newsletter-form-header-description p {
-    text-align: left !important; font-size: 16px !important; line-height: 1.75 !important; color: var(--sand) !important;
-    max-width: 30em; margin: 0 0 8px !important;
-  }
+  .fe-block-3c592271fec3ddcc428a h2::before { font-size: 10px; letter-spacing: .3em; }
   .fe-block-146eebe68a285a66bcba .newsletter-form-header,
-  .fe-block-146eebe68a285a66bcba .newsletter-form-body { align-items: flex-start !important; text-align: left !important; }
-  .fe-block-146eebe68a285a66bcba .newsletter-form-header,
-  .fe-block-146eebe68a285a66bcba .newsletter-form-header-description { margin-left: 0 !important; margin-right: auto !important; }
-  .fe-block-146eebe68a285a66bcba .newsletter-form-field-element { padding-left: 0 !important; }
+  .fe-block-146eebe68a285a66bcba .newsletter-form-body { align-items: center !important; text-align: center !important; }
+  .fe-block-146eebe68a285a66bcba .newsletter-form-header { margin-left: auto !important; }
+  .fe-block-146eebe68a285a66bcba .newsletter-form-header-description p { text-align: center !important; padding: 0 26px; font-size: 15px !important; }
   .fe-block-146eebe68a285a66bcba .newsletter-form-fields-wrapper,
-  .fe-block-146eebe68a285a66bcba .newsletter-form-field-wrapper { width: min(420px, 100%); margin-left: 0; margin-right: 0; }
-  .fe-block-146eebe68a285a66bcba .newsletter-form-field-element,
-  .fe-block-146eebe68a285a66bcba .newsletter-form-field-element::placeholder { text-align: left !important; }
-  .fe-block-146eebe68a285a66bcba .newsletter-form-button-wrapper { justify-content: flex-start !important; text-align: left !important; }
-  .fe-block-146eebe68a285a66bcba .newsletter-form-footnote p { text-align: left !important; max-width: 36em; }
-  .fe-block-146eebe68a285a66bcba .captcha-container { text-align: left !important; }
+  .fe-block-146eebe68a285a66bcba .newsletter-form-field-wrapper { margin-left: auto; margin-right: auto; }
+  .fe-block-146eebe68a285a66bcba .newsletter-form-field-element { max-width: 240px; display: block; margin-left: auto !important; margin-right: auto !important; text-align: center !important; }
+  .fe-block-146eebe68a285a66bcba .newsletter-form-field-element::placeholder { text-align: center; }
+  .fe-block-146eebe68a285a66bcba .newsletter-form-button-wrapper { justify-content: center !important; }
+  .fe-block-146eebe68a285a66bcba .newsletter-form-footnote { padding: 0 30px; }
+  .fe-block-146eebe68a285a66bcba .newsletter-form-footnote p { text-align: center !important; }
 }
 
