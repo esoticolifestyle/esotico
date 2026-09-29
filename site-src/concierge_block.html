@@ -1,0 +1,69 @@
+<!-- esotico concierge: our own chat button in place of tawk.to's (29 Sep 2026; the owner: tawk's bubble and its greeting
+     boxes "look very lame compared to the luxury feel of the site" and covered the cookie notice). tawk.to stays the chat
+     service; its own bubble and greetings are hidden (Tawk_API.hideWidget on load and whenever the chat is minimised).
+     An ink pill with a gilt hairline, "◐ Concierge" in tracked capitals (a small ink circle with the half-gold dot on
+     phones), opens the chat. It sits above the cookie notice while that is showing. A gold dot marks an unread reply. -->
+<style>
+  .esotico-concierge {
+    position: fixed; right: 24px; bottom: 24px; z-index: 2147483000; display: flex; align-items: center; gap: 10px;
+    height: 46px; padding: 0 22px 0 18px; background: #101820; color: #F4EFE7; border: 1px solid rgba(182,162,116,.8);
+    border-radius: 999px; cursor: pointer; font: 600 11px/1 'Josefin Sans', 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: .28em; text-transform: uppercase; box-shadow: 0 10px 30px rgba(16,24,32,.28);
+    transition: background-color .3s ease, color .3s ease, bottom .3s ease, opacity .3s ease; opacity: 0;
+  }
+  .esotico-concierge.is-ready { opacity: 1; }
+  /* while the chat is open, tawk's own round close button is the one control (owner, 29 Sep: both showed at once) */
+  .esotico-concierge.is-ready.is-open { opacity: 0; pointer-events: none; }
+  .esotico-concierge:hover, .esotico-concierge:focus-visible { background: #B6A274; color: #101820; outline: none; }
+  .esotico-concierge-dot {
+    width: 12px; height: 12px; border-radius: 50%; border: 1px solid #B6A274; flex: 0 0 auto;
+    background: linear-gradient(90deg, #B6A274 50%, transparent 50%);
+  }
+  .esotico-concierge:hover .esotico-concierge-dot { border-color: #101820; background: linear-gradient(90deg, #101820 50%, transparent 50%); }
+  .esotico-concierge-unread {
+    position: absolute; top: -3px; right: -3px; width: 10px; height: 10px; border-radius: 50%;
+    background: #B6A274; border: 2px solid #101820; display: none;
+  }
+  .esotico-concierge.has-unread .esotico-concierge-unread { display: block; }
+  @media (max-width: 767px) {
+    .esotico-concierge { right: 16px; bottom: 16px; width: 48px; height: 48px; padding: 0; justify-content: center; }
+    .esotico-concierge-label { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .esotico-concierge { transition: none; } }
+</style>
+<script>
+(function () {
+  var api = window.Tawk_API = window.Tawk_API || {};
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'esotico-concierge';
+  btn.setAttribute('aria-label', 'Chat with esotico');
+  btn.innerHTML = '<span class="esotico-concierge-dot" aria-hidden="true"></span><span class="esotico-concierge-label">Concierge</span><span class="esotico-concierge-unread" aria-hidden="true"></span>';
+  function hide() { try { api.hideWidget(); } catch (e) {} }
+  api.onLoad = function () { hide(); btn.classList.add('is-ready'); };
+  api.onChatHidden = function () { btn.classList.add('is-ready'); };
+  api.onChatMessageAgent = function () { if (!btn.dataset.open) { btn.classList.add('has-unread'); } };
+  api.onChatMaximized = function () { btn.dataset.open = '1'; btn.classList.remove('has-unread'); btn.classList.add('is-open'); };
+  btn.addEventListener('click', function () {
+    btn.classList.add('is-open');
+    try { api.showWidget(); api.maximize(); } catch (e) {}
+    btn.classList.remove('has-unread');
+  });
+  api.onChatMinimized = function () { delete btn.dataset.open; btn.classList.remove('is-open'); hide(); };
+  function place() {
+    var banner = document.querySelector('.gdpr-cookie-banner');
+    var gap = window.innerWidth < 768 ? 16 : 24;
+    var lift = 0;
+    if (banner) { var r = banner.getBoundingClientRect(); if (r.height && r.top < window.innerHeight) { lift = window.innerHeight - r.top; } }
+    btn.style.bottom = (lift + gap) + 'px';
+  }
+  function start() {
+    document.body.appendChild(btn);
+    place();
+    setInterval(place, 800);
+    window.addEventListener('resize', place);
+    setTimeout(function () { btn.classList.add('is-ready'); }, 4000);
+  }
+  if (document.body) { start(); } else { document.addEventListener('DOMContentLoaded', start); }
+})();
+</script>
