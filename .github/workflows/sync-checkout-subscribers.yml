@@ -1,0 +1,34 @@
+# Every day at 11:00 UTC (8:00 in Halifax during daylight time), copy the buyers who ticked "keep me informed" at
+# checkout on esotico.ca from Squarespace into Sender.net, where the welcome email starts. See
+# automation/sync_checkout_subscribers.py. Runs in GitHub's cloud: the owner's computer can be off.
+name: Sync checkout subscribers to Sender
+
+on:
+  schedule:
+    - cron: "0 11 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Report only, add nobody (1 = yes)"
+        default: "1"
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Copy new opt-ins to Sender
+        env:
+          SQUARESPACE_API_KEY: ${{ secrets.SQUARESPACE_API_KEY }}
+          SENDER_API_TOKEN: ${{ secrets.SENDER_API_TOKEN }}
+          SENDER_GROUP_ID: ${{ secrets.SENDER_GROUP_ID }}
+          LOOKBACK_DAYS: "3"
+          DRY_RUN: ${{ github.event.inputs.dry_run || '0' }}
+        run: python automation/sync_checkout_subscribers.py

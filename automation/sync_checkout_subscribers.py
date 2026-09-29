@@ -1,0 +1,116 @@
+"""Copy esotico.ca's new marketing subscribers from Squarespace into Sender.net.
+
+Buyers who tick "keep me informed" at checkout become Squarespace contacts with acceptsMarketing = true. Sender.net (the
+free email tool) has no Squarespace connection, so this runs on a schedule (GitHub Actions, .github/workflows/) and:
+  1. asks Squarespace's Contacts API for contacts who opted in to marketing within the last LOOKBACK_DAYS;
+  2. for each one, asks Sender whether that email already exists - if it does (active, unsubscribed or bounced), it is
+     LEFT ALONE, so nobody who unsubscribed in Sender is ever re-added (Canada's anti-spam law, CASL);
+  3. adds the new ones to the Sender group SENDER_GROUP_ID, which starts the welcome email automation.
+The lookback overlaps the schedule, so a missed run is caught by the next one; step 2 makes a repeat harmless.
+
+The repository is public, so this prints COUNTS ONLY - never an email address or a name.
+
+Environment (GitHub repository secrets):
+  SQUARESPACE_API_KEY   Squarespace developer API key with the Contacts read-only permission (CONTACT_READONLY)
+  SENDER_API_TOKEN      Sender.net API access token
+  SENDER_GROUP_ID       the Sender group new subscribers join (the welcome automation watches it)
+  LOOKBACK_DAYS         optional, default 3
+  DRY_RUN               optional, "1" = report what would be added, add nothing
+Sources: developers.squarespace.com/commerce-apis/contacts (POST /v1/contacts/query, acceptsMarketingWithDate);
+api.sender.net (GET /v2/subscribers/{email}, POST /v2/subscribers)."""
+import datetime as dt
+import json
+import os
+import sys
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+
+SQ = os.environ.get("SQ_URL", "https://api.squarespace.com/v1/contacts/query")      # override: tests only
+SENDER = os.environ.get("SENDER_URL", "https://api.sender.net/v2/subscribers")  # override: tests only
+UA = "esotico-subscriber-sync/1.0 (hello@esotico.ca)"
+
+
+def call(method, url, token, body=None, tries=5):
+    data = json.dumps(body).encode() if body is not None else None
+    for attempt in range(tries):
+        req = urllib.request.Request(url, data=data, method=method, headers={
+            "Authorization": f"Bearer {token}", "User-Agent": UA,
+            "Content-Type": "application/json", "Accept": "application/json"})
+        try:
+            with urllib.request.urlopen(req, timeout=30) as r:
+                raw = r.read()
+                return r.status, (json.loads(raw) if raw else {})
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and attempt < tries - 1:          # rate limited: wait and retry
+                time.sleep(2 ** attempt * 5)
+                continue
+            raw = e.read()
+            try:
+                return e.code, json.loads(raw) if raw else {}
+            except ValueError:
+                return e.code, {}
+    return 429, {}
+
+
+def squarespace_opt_ins(key, since):
+    body = {"acceptsMarketingWithDate": {"acceptsMarketing": True, "joinedOn": {
+        "after": since.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "before": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}},
+        "pageSize": 1000, "sortField": "ACCEPTS_MARKETING_JOINED_ON", "sortDirection": "ASCENDING"}
+    out = []
+    while True:
+        status, page = call("POST", SQ, key, body)
+        if status != 200:
+            sys.exit(f"Squarespace Contacts API answered {status}; check SQUARESPACE_API_KEY and its Contacts permission")
+        for c in page.get("contacts", []):
+            pe = c.get("primaryEmail") or {}
+            am = pe.get("acceptsMarketing") or {}
+            if pe.get("email") and am.get("acceptsMarketing") and not am.get("leftOn"):
+                out.append({"email": pe["email"].strip().lower(),
+                            "firstname": c.get("firstName") or "", "lastname": c.get("lastName") or ""})
+        nxt = (page.get("pagination") or {}).get("nextPageCursor")
+        if not (page.get("pagination") or {}).get("hasNextPage") or not nxt:
+            return out
+        body["cursor"] = nxt
+
+
+def main():
+    key, token, group = (os.environ.get(k, "").strip() for k in ("SQUARESPACE_API_KEY", "SENDER_API_TOKEN", "SENDER_GROUP_ID"))
+    missing = [n for n, v in (("SQUARESPACE_API_KEY", key), ("SENDER_API_TOKEN", token), ("SENDER_GROUP_ID", group)) if not v]
+    if missing:
+        sys.exit("Missing secrets: " + ", ".join(missing))
+    days = int(os.environ.get("LOOKBACK_DAYS") or 3)
+    dry = os.environ.get("DRY_RUN") == "1"
+    since = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=days)
+
+    people = {p["email"]: p for p in squarespace_opt_ins(key, since)}      # one row per email
+    added = existing = failed = 0
+    for email, p in people.items():
+        status, _ = call("GET", f"{SENDER}/{urllib.parse.quote(email, safe='')}", token)
+        if status == 200:
+            existing += 1                                                  # never touched: may have unsubscribed
+            continue
+        if status != 404:
+            failed += 1
+            continue
+        if dry:
+            added += 1
+            continue
+        status, _ = call("POST", SENDER, token, {"email": email, "firstname": p["firstname"],
+                                                 "lastname": p["lastname"], "groups": [group],
+                                                 "trigger_automation": True})
+        if status in (200, 201):
+            added += 1
+        else:
+            failed += 1
+    print(f"Opted in at checkout in the last {days} days: {len(people)}. "
+          f"{'Would add' if dry else 'Added'} to Sender: {added}. Already in Sender (left alone): {existing}. "
+          f"Failed: {failed}.")
+    if failed:
+        sys.exit(1)                                                        # a red run emails the repo owner
+
+
+if __name__ == "__main__":
+    main()
