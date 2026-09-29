@@ -28,7 +28,7 @@ jobs:
         env:
           SQUARESPACE_API_KEY: ${{ secrets.SQUARESPACE_API_KEY }}
           SENDER_API_TOKEN: ${{ secrets.SENDER_API_TOKEN }}
-          SENDER_GROUP_ID: ${{ secrets.SENDER_GROUP_ID }}
+          SENDER_GROUP: "Website subscribers"
           LOOKBACK_DAYS: "3"
           DRY_RUN: ${{ github.event.inputs.dry_run || '0' }}
         run: python automation/sync_checkout_subscribers.py

@@ -5,7 +5,7 @@ free email tool) has no Squarespace connection, so this runs on a schedule (GitH
   1. asks Squarespace's Contacts API for contacts who opted in to marketing within the last LOOKBACK_DAYS;
   2. for each one, asks Sender whether that email already exists - if it does (active, unsubscribed or bounced), it is
      LEFT ALONE, so nobody who unsubscribed in Sender is ever re-added (Canada's anti-spam law, CASL);
-  3. adds the new ones to the Sender group SENDER_GROUP_ID, which starts the welcome email automation.
+  3. adds the new ones to the Sender group named SENDER_GROUP (found by its title), which starts the welcome email.
 The lookback overlaps the schedule, so a missed run is caught by the next one; step 2 makes a repeat harmless.
 
 The repository is public, so this prints COUNTS ONLY - never an email address or a name.
@@ -13,11 +13,12 @@ The repository is public, so this prints COUNTS ONLY - never an email address or
 Environment (GitHub repository secrets):
   SQUARESPACE_API_KEY   Squarespace developer API key with the Contacts read-only permission (CONTACT_READONLY)
   SENDER_API_TOKEN      Sender.net API access token
-  SENDER_GROUP_ID       the Sender group new subscribers join (the welcome automation watches it)
+  SENDER_GROUP          optional, the Sender group's name (default "Website subscribers"); the welcome automation
+                        watches this group
   LOOKBACK_DAYS         optional, default 3
   DRY_RUN               optional, "1" = report what would be added, add nothing
 Sources: developers.squarespace.com/commerce-apis/contacts (POST /v1/contacts/query, acceptsMarketingWithDate);
-api.sender.net (GET /v2/subscribers/{email}, POST /v2/subscribers)."""
+api.sender.net (GET /v2/groups, GET /v2/subscribers/{email}, POST /v2/subscribers)."""
 import datetime as dt
 import json
 import os
@@ -29,6 +30,7 @@ import urllib.request
 
 SQ = os.environ.get("SQ_URL", "https://api.squarespace.com/v1/contacts/query")      # override: tests only
 SENDER = os.environ.get("SENDER_URL", "https://api.sender.net/v2/subscribers")  # override: tests only
+GROUPS = os.environ.get("SENDER_GROUPS_URL", "https://api.sender.net/v2/groups")  # override: tests only
 UA = "esotico-subscriber-sync/1.0 (hello@esotico.ca)"
 
 
@@ -76,11 +78,25 @@ def squarespace_opt_ins(key, since):
         body["cursor"] = nxt
 
 
+def sender_group_id(token, title):
+    url = GROUPS
+    while url:
+        status, page = call("GET", url, token)
+        if status != 200:
+            sys.exit(f"Sender groups API answered {status}; check SENDER_API_TOKEN")
+        for g in page.get("data", []):
+            if (g.get("title") or "").strip().lower() == title.strip().lower():
+                return g["id"]
+        url = (page.get("links") or {}).get("next")
+    sys.exit(f'No Sender group named "{title}"; create it in Sender (Subscribers > Groups)')
+
+
 def main():
-    key, token, group = (os.environ.get(k, "").strip() for k in ("SQUARESPACE_API_KEY", "SENDER_API_TOKEN", "SENDER_GROUP_ID"))
-    missing = [n for n, v in (("SQUARESPACE_API_KEY", key), ("SENDER_API_TOKEN", token), ("SENDER_GROUP_ID", group)) if not v]
+    key, token = (os.environ.get(k, "").strip() for k in ("SQUARESPACE_API_KEY", "SENDER_API_TOKEN"))
+    missing = [n for n, v in (("SQUARESPACE_API_KEY", key), ("SENDER_API_TOKEN", token)) if not v]
     if missing:
         sys.exit("Missing secrets: " + ", ".join(missing))
+    group = sender_group_id(token, os.environ.get("SENDER_GROUP") or "Website subscribers")
     days = int(os.environ.get("LOOKBACK_DAYS") or 3)
     dry = os.environ.get("DRY_RUN") == "1"
     since = dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=days)
