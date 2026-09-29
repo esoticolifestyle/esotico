@@ -126,7 +126,7 @@ def main():
             added += 1
         else:
             failed += 1
-    print(f"Opted in at checkout in the last {days} days: {len(people)}. "
+    print(f"New marketing opt-ins (checkout box, pop-up, homepage form) in the last {days} days: {len(people)}. "
           f"{'Would add' if dry else 'Added'} to Sender: {added}. Already in Sender (left alone): {existing}. "
           f"Failed: {failed}.")
     if failed:
