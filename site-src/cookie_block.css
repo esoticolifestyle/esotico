@@ -1,0 +1,12 @@
+/* the cookie notice reads at body size (29 Sep, the owner: "the text on the left is too small"). Squarespace's banner
+   (.gdpr-cookie-banner.full-styling, stylesheet e237edef00ae5990) sets the whole bar at 12px; its words sit in
+   .disclaimer-text. 15px on desktop, 14px on phones; the buttons keep their own size. */
+.gdpr-cookie-banner.full-styling .disclaimer-text,
+.gdpr-cookie-banner.full-styling .disclaimer-text p,
+.gdpr-cookie-banner.full-styling .disclaimer-text a { font-size: 15px !important; line-height: 1.6 !important; letter-spacing: .02em; }
+@media screen and (max-width: 767px) {
+  .gdpr-cookie-banner.full-styling .disclaimer-text,
+  .gdpr-cookie-banner.full-styling .disclaimer-text p,
+  .gdpr-cookie-banner.full-styling .disclaimer-text a { font-size: 14px !important; }
+}
+
