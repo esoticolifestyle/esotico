@@ -1,0 +1,38 @@
+<!doctype html>
+<!-- Classic Outlook dark-mode probe 2 (29 Sep 2026). Probe 1 (owner's screenshot, dark mode): only ivory text with an
+     INLINE mso-color-alt:#101820 read white; the class form did nothing; plain ivory went dark; gilt and the footer
+     grey read well. Word (same engine, light) paints mso-color-alt as the colour itself, so line F would vanish in
+     light mode - if Outlook's light view does the same. This probe is read twice: in dark mode, and with the message's
+     sun button (light background). Mid-tones are the fallback that reads in both. -->
+<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark">
+<title>Dark mode probe 2</title>
+<!--[if mso]>
+<style>
+    table, td, div, a { background:transparent !important; background-color:transparent !important; }
+</style>
+<![endif]-->
+</head>
+<body style="margin:0;padding:0;background-color:#101820;">
+<!--[if gte mso 9]><v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t"><v:fill type="tile" color="#101820"/></v:background><![endif]-->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#101820" style="background-color:#101820;">
+<tr><td align="center" style="padding:30px 20px;font-family:Arial,sans-serif;font-size:20px;line-height:1.6;">
+<table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0">
+<tr><td style="padding:6px 0;color:#F4EFE7;">1. Plain ivory (today)</td></tr>
+<tr><td style="padding:6px 0;color:#F4EFE7;mso-color-alt:#101820;">2. Ivory + alt ink (probe 1 winner F)</td></tr>
+<tr><td style="padding:6px 0;color:#F4EFE7;mso-color-alt:#3A3528;">3. Ivory + alt dark bronze #3A3528</td></tr>
+<tr><td style="padding:6px 0;color:#F4EFE7;mso-color-alt:#5E5848;">4. Ivory + alt deep stone #5E5848</td></tr>
+<tr><td style="padding:6px 0;color:#B6A274;mso-color-alt:#4A4027;">5. Gilt + alt dark gold #4A4027</td></tr>
+<tr><td style="padding:6px 0;color:#B6A274;">6. Gilt plain (control)</td></tr>
+<tr><td style="padding:6px 0;color:#9A917E;">7. Stone #9A917E</td></tr>
+<tr><td style="padding:6px 0;color:#A69D89;">8. Stone #A69D89</td></tr>
+<tr><td style="padding:6px 0;color:#B2A994;">9. Stone #B2A994</td></tr>
+<tr><td style="padding:6px 0;color:#8f8467;">10. Footer grey #8f8467 (control)</td></tr>
+</table>
+</td></tr>
+</table>
+</body>
+</html>
