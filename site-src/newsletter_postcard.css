@@ -41,14 +41,18 @@
     content: ""; position: absolute; z-index: 1; pointer-events: none; left: 5%; top: 8%; bottom: 8%; width: 38%;
     background: url(https://esoticolifestyle.github.io/esotico/images/email/october-salon.jpg) center / contain no-repeat;
   }
+  /* longhands only: the site compiler (LESS 1.3.3) reads "a / b" between numbers as a division (v51 served
+     grid-area:.00171429 and "top .14772727px"), so no slash shorthand in this block */
   .fe-block-60608d066275f348e180::after {
-    background:
-      url(https://esoticolifestyle.github.io/esotico/images/site/postmark.png) right 34px top 26px / 176px auto no-repeat,
-      linear-gradient(rgba(182,162,116,.35), rgba(182,162,116,.35)) 47% 50% / 1px 70% no-repeat;
+    background-image: url(https://esoticolifestyle.github.io/esotico/images/site/postmark.png),
+      linear-gradient(rgba(182,162,116,.35), rgba(182,162,116,.35));
+    background-position: right 34px top 26px, 47% 50%;
+    background-size: 176px auto, 1px 70%;
+    background-repeat: no-repeat, no-repeat;
   }
   /* the right half of the card: title, invitation and form, flush left */
-  .fe-block-3c592271fec3ddcc428a { grid-area: 6 / 14 / 10 / 25 !important; }
-  .fe-block-146eebe68a285a66bcba { grid-area: 10 / 14 / 19 / 25 !important; }
+  .fe-block-3c592271fec3ddcc428a { grid-row-start: 6 !important; grid-row-end: 10 !important; grid-column-start: 14 !important; grid-column-end: 25 !important; }
+  .fe-block-146eebe68a285a66bcba { grid-row-start: 10 !important; grid-row-end: 19 !important; grid-column-start: 14 !important; grid-column-end: 25 !important; }
   .fe-block-3c592271fec3ddcc428a h2 { text-align: left !important; }
   .fe-block-3c592271fec3ddcc428a h2::before {
     content: "◐  The esotico letter"; width: auto; height: auto; border: 0; border-radius: 0; margin: 0 0 20px; background: none;
