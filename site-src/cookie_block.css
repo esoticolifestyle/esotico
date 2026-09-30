@@ -1,12 +1,26 @@
 /* the cookie notice reads at body size (29 Sep, the owner: "the text on the left is too small"). Squarespace's banner
    (.gdpr-cookie-banner.full-styling, stylesheet e237edef00ae5990) sets the whole bar at 12px; its words sit in
-   .disclaimer-text. 15px on desktop, 14px on phones; the buttons keep their own size. */
+   .disclaimer-text. 15px on desktop; the buttons keep their own size. */
 .gdpr-cookie-banner.full-styling .disclaimer-text,
 .gdpr-cookie-banner.full-styling .disclaimer-text p,
 .gdpr-cookie-banner.full-styling .disclaimer-text a { font-size: 15px !important; line-height: 1.6 !important; letter-spacing: .02em; }
+/* phones (29 Sep, the owner: the notice was "massive on mobile"; it took 239 of 812 px, 30%, with the choices on two
+   rows): 12.5px text, the three choices on one row as square buttons, measured 151 px at 375 x 812. Under 360 px the
+   labels would truncate, so Manage cookies drops to its own line (191 px at 320 x 640). The wording is unchanged. */
 @media screen and (max-width: 767px) {
+  .gdpr-cookie-banner.full-styling { padding: 14px 16px !important; }
   .gdpr-cookie-banner.full-styling .disclaimer-text,
   .gdpr-cookie-banner.full-styling .disclaimer-text p,
-  .gdpr-cookie-banner.full-styling .disclaimer-text a { font-size: 14px !important; }
+  .gdpr-cookie-banner.full-styling .disclaimer-text a { font-size: 12.5px !important; line-height: 1.5 !important; letter-spacing: .01em; margin: 0 !important; }
+  .gdpr-cookie-banner.full-styling .disclaimer-text { margin: 0 0 12px !important; padding: 0 !important; }
+  .gdpr-cookie-banner.full-styling .button-group { display: flex !important; flex-wrap: nowrap !important; align-items: center !important; gap: 8px !important; margin: 0 !important; padding: 0 !important; width: 100% !important; }
+  .gdpr-cookie-banner.full-styling .button-group button { margin: 0 !important; min-width: 0 !important; width: auto !important; border-radius: 0 !important; font-size: 10px !important; letter-spacing: .16em !important; line-height: 1.2 !important; white-space: nowrap !important; }
+  .gdpr-cookie-banner.full-styling .button-group .accept,
+  .gdpr-cookie-banner.full-styling .button-group .decline { flex: 1 1 0 !important; padding: 11px 6px !important; }
+  .gdpr-cookie-banner.full-styling .button-group .manage { flex: 0 0 auto !important; padding: 11px 2px !important; }
+}
+@media screen and (max-width: 359px) {
+  .gdpr-cookie-banner.full-styling .button-group { flex-wrap: wrap !important; row-gap: 4px !important; }
+  .gdpr-cookie-banner.full-styling .button-group .manage { flex: 1 0 100% !important; padding: 6px 0 0 !important; text-align: left !important; }
 }
 
