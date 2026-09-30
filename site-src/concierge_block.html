@@ -56,6 +56,22 @@
     var lift = 0;
     if (banner) { var r = banner.getBoundingClientRect(); if (r.height && r.top < window.innerHeight) { lift = window.innerHeight - r.top; } }
     btn.style.bottom = (lift + gap) + 'px';
+    liftTawk(window.innerWidth >= 768 ? lift : 0);
+  }
+  /* tawk's own frames (the open chat, its round close button, its "Powered by" badge, which stays visible) sit above the cookie notice and covered "Accept all"
+     (owner's screenshot, 29 Sep). While the notice shows on desktop, they rise by its height; tawk rewrites its inline
+     bottom on every state change, so each frame keeps its own base and is re-lifted on the next pass. */
+  function liftTawk(lift) {
+    var frames = document.querySelectorAll('iframe[title="Chat widget"], iframe[title="Visit tawk.to"]');
+    for (var i = 0; i < frames.length; i++) {
+      var f = frames[i];
+      var cur = parseFloat(f.style.getPropertyValue('bottom'));
+      if (isNaN(cur)) { continue; }
+      if (f.dataset.eSet === undefined || parseFloat(f.dataset.eSet) !== cur) { f.dataset.eBase = String(cur); }
+      var want = parseFloat(f.dataset.eBase) + lift;
+      if (want !== cur) { f.style.setProperty('bottom', want + 'px', 'important'); }
+      f.dataset.eSet = String(want);
+    }
   }
   function start() {
     document.body.appendChild(btn);
