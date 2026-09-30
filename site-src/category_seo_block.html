@@ -10,6 +10,7 @@
   letter-spacing: .16em !important; text-transform: uppercase; }
 .esotico-cat-intro p { margin: 0 !important; font-size: 16px; line-height: 1.7; opacity: .82; }
 .esotico-has-intro .nested-category-title { display: none !important; }
+.product-list-item-title .esotico-maison { display: block; font-size: .78em; letter-spacing: .14em; margin-bottom: 4px; opacity: .72; }
 @media (max-width: 767px) { .esotico-cat-intro { margin: 4px 0 18px; } .esotico-cat-intro p { font-size: 15px; } }
 </style>
 <script>
@@ -106,7 +107,21 @@
       s[i].setAttribute('data-esotico', 'brand');
     }
   }
-  function run() { head(); body(); labels(); schema(); }
+  /* shop grids (final review, 30 Sep): "Baobab Collection – Les Exclusives Platinum Scented Candle" ran to 4-7 lines
+     on a phone. The maison now sits on its own small line above the piece, as luxury retailers show the designer;
+     the product's own name in Squarespace is unchanged. The list is plain HTML (no framework re-renders it). */
+  function maisonLines() {
+    var t = document.querySelectorAll('.product-list-item-title:not([data-esotico-maison])');
+    for (var i = 0; i < t.length; i++) {
+      var s = t[i].textContent.trim(), m = null;
+      for (var k = 0; k < MAISONS.length; k++) { if (s.indexOf(MAISONS[k] + ' – ') === 0) { m = MAISONS[k]; } }
+      t[i].setAttribute('data-esotico-maison', m ? '1' : '0');
+      if (!m) { continue; }
+      var e = document.createElement('span'); e.className = 'esotico-maison'; e.textContent = m;
+      t[i].textContent = s.slice(m.length + 3); t[i].prepend(e);
+    }
+  }
+  function run() { head(); body(); labels(); schema(); maisonLines(); }
   head();
   var push = history.pushState; history.pushState = function () { var r = push.apply(this, arguments); setTimeout(run, 0); return r; };
   window.addEventListener('popstate', function () { setTimeout(run, 0); });
