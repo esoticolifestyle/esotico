@@ -85,7 +85,28 @@
       prev = lv;
     }
   }
-  function run() { head(); body(); labels(); }
+  /* product data for Google (30 Sep): Squarespace names the store, "esotico", as every product's brand. The maison is
+     the brand; Baobab model numbers (MAX16PB) and Ethnicraft 5-digit product numbers are the makers' own references
+     (checked against other retailers the same day) and go in as mpn. Merchant Center gets the same from its own file. */
+  var MAISONS = ['Baobab Collection', 'Ethnicraft', 'Evelyne Prélonge', 'Hypsoé', 'Apotheca'];
+  function schema() {
+    if (location.pathname.indexOf('/shop/p/') !== 0) { return; }
+    var s = document.querySelectorAll('script[type="application/ld+json"]:not([data-esotico])');
+    for (var i = 0; i < s.length; i++) {
+      var j; try { j = JSON.parse(s[i].textContent); } catch (e) { continue; }
+      if (!j || j['@type'] !== 'Product') { continue; }
+      var name = String(j.name || ''), m = null;
+      for (var k = 0; k < MAISONS.length; k++) { if (name.indexOf(MAISONS[k]) === 0) { m = MAISONS[k]; } }
+      if (!m) { continue; }
+      j.brand = { '@type': 'Brand', 'name': m };
+      j.name = name.replace(/\s+—\s+esotico$/, '');
+      var sku = j.offers && j.offers.sku ? String(j.offers.sku) : '';
+      if ((m === 'Baobab Collection' && /^(MAX|TOTEM|REF|LOD)[A-Z0-9]+$/.test(sku)) || (m === 'Ethnicraft' && /^2\d{4}$/.test(sku))) { j.mpn = sku; }
+      s[i].textContent = JSON.stringify(j);
+      s[i].setAttribute('data-esotico', 'brand');
+    }
+  }
+  function run() { head(); body(); labels(); schema(); }
   head();
   var push = history.pushState; history.pushState = function () { var r = push.apply(this, arguments); setTimeout(run, 0); return r; };
   window.addEventListener('popstate', function () { setTimeout(run, 0); });
