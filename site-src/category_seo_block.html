@@ -66,7 +66,15 @@
     /* the brand stylesheet shows the category's own small title with !important; the H1 above now names the page */
     var old = h.querySelector('.nested-category-title'); if (old) { old.style.setProperty('display', 'none', 'important'); }
   }
-  function run() { head(); body(); }
+  /* screen-reader names Lighthouse found missing (30 Sep): the shop's icon-only Filter button on phones, and the empty
+     duplicate link Squarespace puts over each product card's status on the homepage (the card's own link already names it) */
+  function labels() {
+    var f = document.querySelectorAll('.product-list-filters-drawer-open-button:not([aria-label])');
+    for (var i = 0; i < f.length; i++) { f[i].setAttribute('aria-label', 'Filter'); }
+    var l = document.querySelectorAll('a.product-status-link:not([aria-hidden])');
+    for (var j = 0; j < l.length; j++) { if (!l[j].textContent.trim()) { l[j].setAttribute('aria-hidden', 'true'); l[j].setAttribute('tabindex', '-1'); } }
+  }
+  function run() { head(); body(); labels(); }
   head();
   var push = history.pushState; history.pushState = function () { var r = push.apply(this, arguments); setTimeout(run, 0); return r; };
   window.addEventListener('popstate', function () { setTimeout(run, 0); });

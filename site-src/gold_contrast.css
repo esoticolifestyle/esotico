@@ -1,0 +1,10 @@
+/* small gold text readable on every background (30 Sep, SEO audit / Lighthouse accessibility). The brand gold #84754E
+   gives 3.96:1 on ivory, 3.55:1 on sand and 3.95:1 on ink; small text needs 4.5:1. On light backgrounds the same gold
+   one step darker, #706342 (5.16 ivory, 4.64 sand, 5.91 white); dark sections, the header and the pop-up keep #84754E
+   for their rings, frames and hairlines, and small links on ink take the gilt #B6A274 (7.17:1). "Sold out" came from
+   Squarespace's own accent colour, so it is pointed at the same gold. */
+:root { --gold: #706342; }
+[data-section-theme="black"], .sqs-popup-overlay, header, #header { --gold: #84754E; }
+[data-section-theme="black"] .sqs-html-content p a { color: var(--gilt) !important; }
+.product-mark.sold-out { color: var(--gold) !important; }
+
