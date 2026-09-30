@@ -12,6 +12,9 @@
     transition: background-color .3s ease, color .3s ease, bottom .3s ease, opacity .3s ease; opacity: 0;
   }
   .esotico-concierge.is-ready { opacity: 1; }
+  .esotico-concierge.is-loading { cursor: progress; }
+  .esotico-concierge.is-loading .esotico-concierge-dot { animation: esotico-concierge-wait 1s linear infinite; }
+  @keyframes esotico-concierge-wait { to { transform: rotate(360deg); } }
   /* while the chat is open, tawk's own round close button is the one control (owner, 29 Sep: both showed at once) */
   .esotico-concierge.is-ready.is-open { opacity: 0; pointer-events: none; }
   .esotico-concierge:hover, .esotico-concierge:focus-visible { background: #B6A274; color: #101820; outline: none; }
@@ -39,15 +42,35 @@
   btn.className = 'esotico-concierge';
   btn.setAttribute('aria-label', 'Chat with esotico');
   btn.innerHTML = '<span class="esotico-concierge-dot" aria-hidden="true"></span><span class="esotico-concierge-label">Concierge</span><span class="esotico-concierge-unread" aria-hidden="true"></span>';
+  /* tawk.to loads only when a visitor reaches for the chat (30 Sep 2026, SEO audit): its 235 KB script no longer loads
+     on every page, and its welcome greeting no longer turns every tab title into "1 new message" before anyone asks.
+     A touch or hover on the button starts the download; the tap opens the chat once it is ready. */
+  var loaded = false, wantOpen = false;
+  function load() {
+    if (loaded) { return; }
+    loaded = true;
+    window.Tawk_LoadStart = new Date();
+    var s = document.createElement('script');
+    s.async = true; s.src = 'https://embed.tawk.to/6abb987be108d1344174b6fe/1k3mcn96g'; s.charset = 'UTF-8'; s.setAttribute('crossorigin', '*');
+    document.body.appendChild(s);
+  }
   function hide() { try { api.hideWidget(); } catch (e) {} }
-  api.onLoad = function () { hide(); btn.classList.add('is-ready'); };
+  api.onLoad = function () {
+    btn.classList.remove('is-loading');
+    if (wantOpen) { try { api.showWidget(); api.maximize(); } catch (e) {} } else { hide(); }
+    btn.classList.add('is-ready');
+  };
   api.onChatHidden = function () { btn.classList.add('is-ready'); };
   api.onChatMessageAgent = function () { if (!btn.dataset.open) { btn.classList.add('has-unread'); } };
   api.onChatMaximized = function () { btn.dataset.open = '1'; btn.classList.remove('has-unread'); btn.classList.add('is-open'); };
+  btn.addEventListener('pointerenter', load);
+  btn.addEventListener('touchstart', load, { passive: true });
+  btn.addEventListener('focus', load);
   btn.addEventListener('click', function () {
+    btn.classList.remove('has-unread');
+    if (!window.Tawk_API || typeof api.maximize !== 'function') { wantOpen = true; btn.classList.add('is-loading'); load(); return; }
     btn.classList.add('is-open');
     try { api.showWidget(); api.maximize(); } catch (e) {}
-    btn.classList.remove('has-unread');
   });
   api.onChatMinimized = function () { delete btn.dataset.open; btn.classList.remove('is-open'); hide(); };
   function place() {
