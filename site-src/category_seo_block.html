@@ -60,6 +60,8 @@
     box.innerHTML = '<h1></h1><p></p>';
     box.querySelector('h1').textContent = e[0]; box.querySelector('p').textContent = e[2];
     document.body.classList.add('esotico-has-intro');
+    /* the brand stylesheet shows the category's own small title with !important; the H1 above now names the page */
+    var old = h.querySelector('.nested-category-title'); if (old) { old.style.setProperty('display', 'none', 'important'); }
   }
   function run() { head(); body(); }
   head();
