@@ -73,6 +73,17 @@
     for (var i = 0; i < f.length; i++) { f[i].setAttribute('aria-label', 'Filter'); }
     var l = document.querySelectorAll('a.product-status-link:not([aria-hidden])');
     for (var j = 0; j < l.length; j++) { if (!l[j].textContent.trim()) { l[j].setAttribute('aria-hidden', 'true'); l[j].setAttribute('tabindex', '-1'); } }
+    /* a product card's hidden name left out its visible price; the card is now named by what it shows */
+    var c = document.querySelectorAll('a.product-list-item-link[aria-label]');
+    for (var k = 0; k < c.length; k++) { c[k].removeAttribute('aria-label'); }
+    /* headings are read in order: a heading that skips a level (the homepage promise labels are H4 under an H2) is
+       announced one level below the heading before it; nothing changes on screen */
+    var hs = document.querySelectorAll('main h1, main h2, main h3, main h4, main h5, main h6'), prev = 0;
+    for (var m = 0; m < hs.length; m++) {
+      var lv = hs[m].hasAttribute('aria-level') ? +hs[m].getAttribute('aria-level') : +hs[m].tagName.charAt(1);
+      if (prev && lv > prev + 1) { lv = prev + 1; hs[m].setAttribute('role', 'heading'); hs[m].setAttribute('aria-level', String(lv)); }
+      prev = lv;
+    }
   }
   function run() { head(); body(); labels(); }
   head();
