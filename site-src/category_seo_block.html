@@ -121,7 +121,19 @@
       t[i].textContent = s.slice(m.length + 3); t[i].prepend(e);
     }
   }
-  function run() { head(); body(); labels(); schema(); maisonLines(); }
+  /* sold-out pieces go to the end of a shop grid (final review, 30 Sep): Valet Trays opened on three sold-out trays.
+     The cards are moved in the page itself, not only on screen, so keyboard order follows what is seen. */
+  function soldOutLast() {
+    var g = document.querySelectorAll('.product-list-layout-container');
+    for (var i = 0; i < g.length; i++) {
+      var items = g[i].querySelectorAll(':scope > .product-list-item'), sold = [], seenSold = false, needs = false;
+      for (var k = 0; k < items.length; k++) {
+        if (items[k].classList.contains('sold-out')) { sold.push(items[k]); seenSold = true; } else if (seenSold) { needs = true; }
+      }
+      for (var s = 0; needs && s < sold.length; s++) { g[i].appendChild(sold[s]); }
+    }
+  }
+  function run() { head(); body(); labels(); schema(); maisonLines(); soldOutLast(); }
   head();
   var push = history.pushState; history.pushState = function () { var r = push.apply(this, arguments); setTimeout(run, 0); return r; };
   window.addEventListener('popstate', function () { setTimeout(run, 0); });
