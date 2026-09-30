@@ -1,0 +1,7 @@
+/* homepage Bestsellers (30 Sep, the owner: "last product on the right isn't aligned"): on the desktop grid the fourth
+   card (Evelyne Prelonge dog coat, block 831508ea5c5f5c028dcd) sat on rows 28-42 while the other three sit on 30-44,
+   so it stood two rows higher. Same rows as its neighbours; the phone grid (2 x 2) was already aligned. Longhands only. */
+@media screen and (min-width: 768px) {
+  .fe-block-831508ea5c5f5c028dcd { grid-row-start: 30 !important; grid-row-end: 44 !important; }
+}
+

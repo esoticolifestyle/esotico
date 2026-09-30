@@ -1,0 +1,12 @@
+/* buttons fit their column on every desktop and tablet width (30 Sep). The brand buttons (16px capitals, .24em
+   tracking, no wrapping) need 355 px for "Shop the collection"; the grid gives that button 165 px at 768, 224 at 1024,
+   282 at 1280 and 319 even at 1440, so it spilled out on both sides ("HOP THE COLLECTION" on a tablet, "P BAOBAB
+   COLLECTION" on the maison pages). The label now wraps inside the button when the column is narrow, as it already
+   does on phones; on wide screens nothing changes (68 px tall, one line where it fits). Longhands only. */
+@media screen and (min-width: 768px) {
+  .fe-block a.sqs-block-button-element { max-width: 100% !important; box-sizing: border-box !important; white-space: normal !important;
+    height: auto !important; min-height: 52px; padding-top: 14px !important; padding-bottom: 14px !important;
+    padding-left: 24px !important; padding-right: 24px !important; line-height: 1.35 !important; text-align: center !important;
+    justify-content: center; }
+}
+
