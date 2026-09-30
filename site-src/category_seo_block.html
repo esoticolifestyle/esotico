@@ -1,0 +1,74 @@
+<!-- esotico category pages (30 Sep 2026, SEO audit): Squarespace gives a shop category page no heading, no search
+     description and a long title ("Candles — Shop luxury candles, trays and faux fur — esotico", 58-73 characters).
+     For each category address this sets a short title and a search description while the page is still loading, and
+     puts a main heading (H1) and a one-line introduction above the products. Facts per category were read from the
+     live shop the same night (maisons, products, lowest prices). Add a new category here when one is added to the shop. -->
+<style>
+.esotico-cat-intro { margin: 6px 0 26px; max-width: 62ch; }
+.esotico-cat-intro h1 { margin: 10px 0 8px !important; font-family: 'Josefin Sans', 'Helvetica Neue', Arial, sans-serif !important;
+  font-weight: 300 !important; font-size: clamp(1.6rem, 3.2vw, 2.4rem) !important; line-height: 1.15 !important;
+  letter-spacing: .16em !important; text-transform: uppercase; }
+.esotico-cat-intro p { margin: 0 !important; font-size: 16px; line-height: 1.7; opacity: .82; }
+.esotico-has-intro .nested-category-title { display: none !important; }
+@media (max-width: 767px) { .esotico-cat-intro { margin: 4px 0 18px; } .esotico-cat-intro p { font-size: 15px; } }
+</style>
+<script>
+(function () {
+  var C = {
+    '/shop': ['The Shop', '', 'Every piece in the store, from four European maisons: candles and diffusers, trays and tables, textiles and faux fur.', ''],
+    '/shop/brands': ['Our Maisons', 'Our Maisons — esotico', 'Four European houses, chosen piece by piece: Baobab Collection and Hypsoé for home fragrance, Ethnicraft for trays, tables and textiles, Evelyne Prélonge for faux fur.', 'Shop Baobab Collection, Ethnicraft, Evelyne Prélonge and Hypsoé in Canada: luxury candles, trays, tables and faux fur, shipped from Nova Scotia.'],
+    '/shop/brands/baobab-collection': ['Baobab Collection', 'Baobab Collection Candles & Diffusers — esotico', 'Scented candles in hand-blown glass and totem diffusers from the Belgian maison, with refills, matches, a snuffer and a wick trimmer.', 'Baobab Collection scented candles, totem diffusers and refills in Canada. Hand-blown glass from the Belgian maison, shipped across Canada.'],
+    '/shop/brands/ethnicraft': ['Ethnicraft', 'Ethnicraft Trays, Tables & Textiles — esotico', 'Wood, glass and mirror trays, tray tables, wall mirrors, cushions, throws and kilim rugs from the Belgian design house.', 'Ethnicraft serving and valet trays, tray tables, mirrors, cushions, throws and kilim rugs in Canada. Belgian design, shipped across Canada and the US.'],
+    '/shop/brands/evelyne-prelonge': ['Evelyne Prélonge', 'Evelyne Prélonge Faux Fur — esotico', 'Cruelty-free faux fur from the Paris maison: throws, scarves, collars, gloves, bags and small gifts.', 'Evelyne Prélonge cruelty-free faux fur in Canada: throws, scarves, collars, gloves and bags from Paris. Shipped across Canada and the US.'],
+    '/shop/brands/hypsoe': ['Hypsoé', 'Hypsoé Refillable Candles — esotico', 'Refillable scented candles in wood and concrete, Still candlesticks and refills from the French maison.', 'Hypsoé refillable scented candles, Still candlesticks and refills in Canada. French home fragrance, shipped across Canada and the US.'],
+    '/shop/gifts': ['Gifts', 'Luxury Gifts for the Home — esotico', 'Candles, trays, faux fur and home pieces to give, sorted by budget and by who they are for.', 'Luxury gifts for the home in Canada: scented candles, glass trays, faux fur and cushions from four European maisons. Free shipping on orders over $200.'],
+    '/shop/gifts/under-100': ['Gifts under $100', 'Gifts Under $100 — esotico', 'Valet trays, candle accessories, refills, faux fur pieces and Hypsoé candles, all under $100.', 'Luxury gifts under $100: Ethnicraft valet trays, Baobab Collection candle accessories, Evelyne Prélonge faux fur and Hypsoé candles.'],
+    '/shop/gifts/100-250': ['Gifts from $100 to $250', 'Gifts $100 to $250 — esotico', 'Scented candles, serving trays, cushions and faux fur accessories from $100 to $250.', 'Gifts from $100 to $250: Baobab Collection candles, Ethnicraft serving trays and cushions, Evelyne Prélonge faux fur. Free shipping over $200.'],
+    '/shop/gifts/250-and-up': ['Gifts from $250', 'Gifts $250 and Up — esotico', 'Statement gifts: throws, large mirror and glass trays and Baobab Collection’s larger candles.', 'Statement gifts from $250: Ethnicraft throws and large trays, Evelyne Prélonge faux fur throws, Baobab Collection candles. Free shipping.'],
+    '/shop/gifts/for-the-host': ['Gifts for the Host', 'Gifts for the Host — esotico', 'Scented candles, candle accessories and small trays to bring to dinner.', 'Host gifts: Baobab Collection and Hypsoé scented candles, candle accessories and small Ethnicraft trays. Shipped across Canada.'],
+    '/shop/gifts/faux-fur': ['Faux Fur Gifts', 'Faux Fur Gifts — esotico', 'Evelyne Prélonge’s cruelty-free faux fur: scarves, collars, gloves, bags and more, from $57.50.', 'Cruelty-free faux fur gifts from Evelyne Prélonge: scarves, collars, gloves and bags. Shipped across Canada and the US.'],
+    '/shop/home-fragrance': ['Home Fragrance', 'Luxury Home Fragrance — esotico', 'Scented candles, diffusers and refills from Baobab Collection and Hypsoé, with the tools to care for them.', 'Luxury home fragrance in Canada: Baobab Collection candles and totem diffusers, Hypsoé refillable candles, refills and accessories.'],
+    '/shop/home-fragrance/candles': ['Scented Candles', 'Luxury Scented Candles — esotico', 'Baobab Collection candles in hand-blown glass and Hypsoé’s refillable wooden and concrete candles, from $52.', 'Luxury scented candles in Canada: Baobab Collection hand-blown glass candles and Hypsoé refillable candles. Free shipping on orders over $200.'],
+    '/shop/home-fragrance/diffusers-and-refills': ['Diffusers and Refills', 'Diffusers & Refills — esotico', 'Baobab Collection totem diffusers and 1 L refills, and Hypsoé refills. Diffusers and refills ship within Canada only.', 'Baobab Collection totem diffusers, 1 L diffuser refills and Hypsoé refills. Shipped within Canada from Nova Scotia.'],
+    '/shop/home-fragrance/candle-accessories': ['Candle Accessories', 'Candle Accessories — esotico', 'Baobab Collection matches, snuffer and wick trimmer, to keep every candle burning cleanly.', 'Baobab Collection candle matches, candle snuffer and wick trimmer. Care for your candles, shipped across Canada.'],
+    '/shop/trays-and-tables': ['Trays and Tables', 'Trays & Tray Tables — esotico', 'Ethnicraft serving trays, valet trays and tray tables in wood, glass and mirror.', 'Ethnicraft serving trays, valet trays, tray tables and nesting side tables in wood, glass and mirror. Shipped across Canada and the US.'],
+    '/shop/trays-and-tables/serving-trays': ['Serving Trays', 'Serving Trays — esotico', 'Ethnicraft serving trays in wood, glass and mirror, from $145.', 'Ethnicraft serving trays in wood, glass and bronze mirror, from $145. Belgian design, shipped across Canada and the US.'],
+    '/shop/trays-and-tables/valet-trays': ['Valet Trays', 'Valet Trays — esotico', 'Small Ethnicraft glass trays for keys, jewellery and whatever you empty from your pockets, from $57.', 'Ethnicraft glass valet trays for keys and jewellery, from $57. A small gift or a finishing touch, shipped across Canada and the US.'],
+    '/shop/trays-and-tables/tray-and-side-tables': ['Tray and Side Tables', 'Tray & Side Tables — esotico', 'Ethnicraft tray tables and nesting side tables. Our largest tables are pickup only, in Bedford, Nova Scotia.', 'Ethnicraft tray side tables, a tray coffee table set and nesting side tables. Belgian design; the largest pieces are pickup in Bedford, NS.'],
+    '/shop/textiles': ['Textiles', 'Cushions, Throws & Rugs — esotico', 'Ethnicraft cushions, throws and kilim rugs, and Evelyne Prélonge faux fur throws.', 'Ethnicraft cushions, woven throws and kilim rugs, and Evelyne Prélonge faux fur throws. Shipped across Canada and the US.'],
+    '/shop/textiles/cushions': ['Cushions', 'Cushions — esotico', 'Ethnicraft square and lumbar cushions in woven patterns, from $98.', 'Ethnicraft square and lumbar cushions in woven patterns, from $98. Belgian design, shipped across Canada and the US.'],
+    '/shop/textiles/throws': ['Throws', 'Throws — esotico', 'Ethnicraft woven throws and Evelyne Prélonge faux fur throws.', 'Ethnicraft woven throws and Evelyne Prélonge cruelty-free faux fur throws. Shipped across Canada and the US.'],
+    '/shop/textiles/rugs': ['Kilim Rugs', 'Kilim Rugs — esotico', 'Flat-woven Ethnicraft kilim rugs, in several sizes.', 'Ethnicraft flat-woven kilim rugs in several sizes. Belgian design for the living room, shipped across Canada and the US.'],
+    '/shop/mirrors-and-desk': ['Mirrors and Desk', 'Mirrors & Desk — esotico', 'Ethnicraft aged wall mirrors and a charcoal desk organizer.', 'Ethnicraft wall mirrors in heavy and medium aged glass, and a charcoal desk organizer. Shipped across Canada and the US.']
+  };
+  function entry() { return C[location.pathname.replace(/\/+$/, '') || '/']; }
+  function head() {
+    var e = entry(); if (!e) { return; }
+    if (e[1] && document.title !== e[1]) { document.title = e[1]; }
+    if (e[3]) {
+      var m = document.querySelector('meta[name="description"]');
+      if (!m) { m = document.createElement('meta'); m.setAttribute('name', 'description'); document.head.appendChild(m); }
+      if (m.getAttribute('content') !== e[3]) { m.setAttribute('content', e[3]); }
+    }
+  }
+  function body() {
+    var e = entry(), h = document.querySelector('.product-list-header'); if (!e || !h) { return; }
+    var box = h.querySelector('.esotico-cat-intro');
+    if (box && box.getAttribute('data-path') === location.pathname) { return; }
+    if (!box) { box = document.createElement('div'); box.className = 'esotico-cat-intro'; var crumb = h.querySelector('.nested-category-breadcrumb'); if (crumb) { crumb.after(box); } else { h.prepend(box); } }
+    box.setAttribute('data-path', location.pathname);
+    box.innerHTML = '<h1></h1><p></p>';
+    box.querySelector('h1').textContent = e[0]; box.querySelector('p').textContent = e[2];
+    document.body.classList.add('esotico-has-intro');
+  }
+  function run() { head(); body(); }
+  head();
+  var push = history.pushState; history.pushState = function () { var r = push.apply(this, arguments); setTimeout(run, 0); return r; };
+  window.addEventListener('popstate', function () { setTimeout(run, 0); });
+  document.addEventListener('DOMContentLoaded', function () {
+    run();
+    new MutationObserver(function () { run(); }).observe(document.body, { childList: true, subtree: true });
+    new MutationObserver(function () { head(); }).observe(document.querySelector('title') || document.head, { childList: true, characterData: true, subtree: true });
+  });
+})();
+</script>
