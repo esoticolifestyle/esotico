@@ -1,0 +1,19 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>esotico tiktok relay</title>
+<script>
+// Hands the TikTok launch files (profile photo and six videos) to tiktok.com when framed there.
+// ?f=<name> sends one file only, so a large video is not held in memory with the others.
+const FILES = ['esotico-profile-picture.png', '1-new-chapter.mp4', '2-gather-beautifully.mp4', '3-hypsoe-refill.mp4',
+  '4-baobab-aurum.mp4', '5-ethnicraft-trays.mp4', '6-faux-fur.mp4'];
+const TO = 'https://www.tiktok.com';
+(async () => {
+  if (parent === window) return;
+  const one = new URLSearchParams(location.search).get('f');
+  for (const f of FILES.filter(n => !one || n === one)) {
+    const b = await (await fetch(f, {cache: 'no-store'})).blob();
+    parent.postMessage({rv: {[f]: b}}, TO);
+  }
+  parent.postMessage({rv: {_done: true}}, TO);
+})();
+</script>
