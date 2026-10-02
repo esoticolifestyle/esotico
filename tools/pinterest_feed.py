@@ -27,6 +27,36 @@ def text(s, n):
     return s[:n].rsplit(' ', 1)[0] if len(s) > n else s
 
 
+HG = 'Home & Garden > '
+# first matching rule wins: (words in the product title, Google product category)
+GPC = [
+    (('snuffer', 'trimmer', 'matches'), HG + 'Decor > Home Fragrance Accessories'),
+    (('candlestick', 'candle holder'), HG + 'Decor > Candle Holders'),
+    (('diffuser', 'refill', 'sticks'), HG + 'Decor > Home Fragrances'),
+    (('candle',), HG + 'Decor > Home Fragrances > Candles'),
+    (('hand soap', 'liquid soap'), 'Health & Beauty > Personal Care > Cosmetics > Bath & Body > Liquid Hand Soap'),
+    (('soap',), 'Health & Beauty > Personal Care > Cosmetics > Bath & Body > Bar Soap'),
+    (('tray table', 'side table', 'coffee table', 'nesting'), 'Furniture > Tables > Accent Tables'),
+    (('tray',), HG + 'Decor > Decorative Trays'),
+    (('mirror',), HG + 'Decor > Mirrors'),
+    (('cushion',), HG + 'Decor > Throw Pillows'),
+    (('throw', 'plaid'), HG + 'Linens & Bedding > Bedding > Blankets'),
+    (('rug', 'kilim'), HG + 'Decor > Rugs'),
+    (('tissue box',), HG + 'Bathroom Accessories > Facial Tissue Holders'),
+    (('scarf', 'collar', 'stole'), 'Apparel & Accessories > Clothing Accessories > Scarves & Shawls'),
+    (('glove', 'mitten', 'wristband'), 'Apparel & Accessories > Clothing Accessories > Gloves & Mittens'),
+    (('key chain', 'keychain', 'pompom'), 'Apparel & Accessories > Clothing Accessories > Keychains'),
+    (('bag', 'pouch'), 'Apparel & Accessories > Handbags, Wallets & Cases > Handbags'),
+    (('dog',), 'Animals & Pet Supplies > Pet Supplies > Dog Supplies > Dog Apparel'),
+    (('desk', 'organizer', 'organiser'), 'Office Supplies > Office Organization > Desk Organizers'),
+]
+
+
+def gpc(title):
+    t = title.lower()
+    return next((c for words, c in GPC if any(w in t for w in words)), HG + 'Decor')
+
+
 def main():
     items, off = [], None
     while True:
@@ -68,10 +98,11 @@ def main():
                 'condition': 'new',
                 'brand': brand,
                 'product_type': 'Home > ' + ('Home Fragrance' if brand in ('Baobab Collection', 'Hypsoé', 'Apotheca') else 'Home Décor'),
+                'google_product_category': gpc(name),
             }
             rows.append(row)
     cols = ['id', 'item_group_id', 'title', 'description', 'link', 'image_link', 'additional_image_link', 'price', 'sale_price',
-            'availability', 'condition', 'brand', 'product_type']
+            'availability', 'condition', 'brand', 'product_type', 'google_product_category']
     with open(OUT, 'w', encoding='utf-8', newline='') as f:
         w = csv.DictWriter(f, fieldnames=cols, delimiter='\t', quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
         w.writeheader()
