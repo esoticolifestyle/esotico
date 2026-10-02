@@ -1,0 +1,23 @@
+name: Pinterest catalog feed
+# Rebuilds site-src/pinterest-feed.tsv from the live shop every morning (07:00 Halifax), so Pinterest's prices and
+# stock match esotico.ca. Pinterest reads the file from GitHub Pages once a day.
+on:
+  schedule:
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  feed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python tools/pinterest_feed.py
+      - run: |
+          git config user.name esoticolifestyle
+          git config user.email 335600765+esoticolifestyle@users.noreply.github.com
+          git add site-src/pinterest-feed.tsv
+          git diff --cached --quiet || (git commit -m "Pinterest feed: daily refresh from esotico.ca" && git push)
