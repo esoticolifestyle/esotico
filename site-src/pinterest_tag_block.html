@@ -1,0 +1,24 @@
+<!-- esotico pinterest tag (1 Oct 2026, owner's yes; named on /privacy the same night): Pinterest tag 2614225108484.
+     It loads only once the visitor allows marketing cookies in the cookie banner, which Squarespace records as the cookie
+     ss_marketingCookiesAllowed=true (read from Squarespace's own banner code). Until then nothing is sent to Pinterest;
+     if the visitor accepts during the visit, the tag starts on that page. Events: page view everywhere, pagevisit on product
+     pages. No enhanced match (no email is passed). -->
+<script>
+(function () {
+  var ID = '2614225108484', done = false;
+  function allowed() { return /(?:^|; )ss_marketingCookiesAllowed=true(?:;|$)/.test(document.cookie); }
+  function start() {
+    if (done || !allowed()) { return; }
+    done = true;
+    !function (e) { if (!window.pintrk) { window.pintrk = function () { window.pintrk.queue.push(Array.prototype.slice.call(arguments)); };
+      var n = window.pintrk; n.queue = []; n.version = '3.0'; var t = document.createElement('script'); t.async = !0; t.src = e;
+      var r = document.getElementsByTagName('script')[0]; r.parentNode.insertBefore(t, r); } }('https://s.pinimg.com/ct/core.js');
+    window.pintrk('load', ID);
+    window.pintrk('page');
+    if (location.pathname.indexOf('/shop/p/') === 0) { window.pintrk('track', 'pagevisit'); }
+  }
+  start();
+  if (!done) { var n = 0, timer = setInterval(function () { start(); if (done || ++n > 900) { clearInterval(timer); } }, 1000); }
+})();
+</script>
+<!-- /esotico pinterest tag -->
