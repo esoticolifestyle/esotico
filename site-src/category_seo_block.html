@@ -12,6 +12,43 @@
 .esotico-has-intro .nested-category-title { display: none !important; }
 .product-list-item-title .esotico-maison { display: block; font-size: .78em; letter-spacing: .14em; margin-bottom: 4px; opacity: .72; }
 @media (max-width: 767px) { .esotico-cat-intro { margin: 4px 0 18px; } .esotico-cat-intro p { font-size: 15px; } }
+/* campaign banner (1 Oct, Thanksgiving): a landing page that looks like the ad it was reached from - the ad's ink
+   ground, lit candle in a gilt arch, half-gold ring and one gold italic word - then the promises the store keeps */
+.esotico-tg { max-width: none; position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(220px, 34%) 1fr; gap: clamp(28px, 5vw, 72px);
+  align-items: center; margin: 8px 0 38px; padding: clamp(32px, 4.5vw, 64px) clamp(24px, 6vw, 88px); background: #101820; color: #F4EFE7;
+  background-image: radial-gradient(ellipse at 22% 40%, rgba(201, 179, 132, .16), transparent 62%); }
+.esotico-tg .tg-art { position: relative; padding: 14px; }
+.esotico-tg .tg-ring { position: absolute; left: 50%; top: 46%; width: 128%; aspect-ratio: 1; transform: translate(-50%, -50%) rotate(-90deg); pointer-events: none; }
+.esotico-tg .tg-ring circle { fill: none; stroke-width: 1.2; }
+.esotico-tg .tg-ring .g { stroke: #C9B384; stroke-dasharray: 1000; stroke-dashoffset: 500; }
+.esotico-tg .tg-ring .f { stroke: rgba(244, 239, 231, .12); }
+.esotico-tg .tg-arch { position: relative; aspect-ratio: 4 / 5; border-radius: 999px 999px 0 0; overflow: hidden; }
+.esotico-tg .tg-art::after { content: ''; position: absolute; inset: 0; border: 1px solid #C9B384; border-radius: 999px 999px 0 0; pointer-events: none; }
+.esotico-tg .tg-arch img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.esotico-tg .tg-eyebrow { margin: 0 0 18px !important; font: 600 12px/1.4 'Josefin Sans', sans-serif !important; letter-spacing: .32em !important; text-transform: uppercase; color: #C9B384 !important; opacity: 1 !important; }
+.esotico-tg .tg-eyebrow b { display: inline-block; width: .9em; height: .9em; margin-right: .6em; vertical-align: -.1em; border: 1px solid #C9B384; border-radius: 50%; background: linear-gradient(90deg, #C9B384 50%, transparent 50%); }
+.esotico-tg h1 { margin: 0 0 20px !important; color: #F4EFE7 !important; font-family: 'Josefin Sans', sans-serif !important; font-weight: 300 !important;
+  font-size: clamp(2.1rem, 4.6vw, 3.9rem) !important; line-height: 1.04 !important; letter-spacing: .2em !important; text-transform: uppercase; }
+.esotico-tg h1 em { display: block; margin-top: .12em; font-family: 'Bodoni Moda', Didot, Georgia, serif; font-style: italic; font-weight: 400; text-transform: none; letter-spacing: .01em; color: #C9B384; font-size: 1.16em; }
+.esotico-tg .tg-sub { margin: 0 0 24px !important; max-width: 44ch; font-size: 17px !important; line-height: 1.65 !important; color: rgba(244, 239, 231, .88) !important; opacity: 1 !important; }
+.esotico-tg ul { list-style: none; margin: 0 0 30px !important; padding: 0 !important; display: flex; flex-wrap: wrap; gap: 10px 26px; }
+.esotico-tg li { margin: 0 !important; padding: 0 !important; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: rgba(244, 239, 231, .78); }
+.esotico-tg li::before { content: ''; display: inline-block; width: 5px; height: 5px; margin: 0 10px 2px 0; border-radius: 50%; background: #C9B384; }
+.esotico-tg a.tg-cta { display: inline-block; padding: 15px 30px; border: 1px solid #C9B384; color: #F4EFE7 !important; font: 600 12px/1 'Josefin Sans', sans-serif; letter-spacing: .3em; text-transform: uppercase; text-decoration: none !important; transition: background .25s, color .25s; }
+.esotico-tg a.tg-cta:hover, .esotico-tg a.tg-cta:focus-visible { background: #C9B384; color: #101820 !important; outline: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .esotico-tg .tg-ring .g { animation: tgDraw 1.6s cubic-bezier(.6, 0, .2, 1) .2s backwards; }
+  .esotico-tg .tg-arch img { animation: tgPush 9s ease-out backwards; }
+  @keyframes tgDraw { from { stroke-dashoffset: 1000; } }
+  @keyframes tgPush { from { transform: scale(1.08); } }
+}
+@media (max-width: 767px) {
+  .esotico-tg { grid-template-columns: 1fr; text-align: center; padding: 30px 20px 34px; gap: 26px; margin: 4px 0 26px; }
+  .esotico-tg .tg-art { width: 58%; max-width: 260px; margin: 0 auto; }
+  .esotico-tg .tg-sub { margin-left: auto !important; margin-right: auto !important; font-size: 15px !important; }
+  .esotico-tg ul { justify-content: center; flex-direction: column; align-items: center; gap: 8px; }
+  .esotico-tg h1 { font-size: 2rem !important; }
+}
 </style>
 <script>
 (function () {
@@ -29,7 +66,9 @@
     '/shop/gifts/250-and-up': ['Gifts from $250', 'Gifts $250 and Up — esotico', 'Statement gifts: throws, large mirror and glass trays and Baobab Collection’s larger candles.', 'Statement gifts from $250: Ethnicraft throws and large trays, Evelyne Prélonge faux fur throws, Baobab Collection candles. Free shipping.'],
     '/shop/gifts/for-the-host': ['Gifts for the Host', 'Gifts for the Host — esotico', 'Scented candles, soaps, candle accessories and small trays to bring to dinner.', 'Host gifts: Baobab Collection, Hypsoé and Apotheca candles, Apotheca soaps, candle accessories and small Ethnicraft trays. Shipped across Canada.'],
     /* Thanksgiving 2026 landing page for the "Gather beautifully" ads (approved 1 Oct); remove with the category after 12 Oct */
-    '/shop/gifts/the-thanksgiving-edit': ['Gather beautifully', 'The Thanksgiving Edit — esotico', 'For the table you set, the home you visit, and the evenings in between. Candles, trays and gifts for Thanksgiving, Monday 12 October. Every order leaves us within 2 business days.', 'The Thanksgiving edit: Hypsoé refillable candles, Baobab Collection and Apotheca candles, Ethnicraft trays and host gifts. Ships across Canada within 2 business days.'],
+    '/shop/gifts/the-thanksgiving-edit': ['Gather beautifully', 'The Thanksgiving Edit — esotico', 'For the table you set, the home you visit, and the evenings in between.', 'The Thanksgiving edit: Hypsoé refillable candles, Baobab Collection and Apotheca candles, Ethnicraft trays and host gifts. Ships across Canada within 2 business days.',
+      {eyebrow: 'Thanksgiving · Monday 12 October', em: 'beautifully', img: 'https://esoticolifestyle.github.io/esotico/site-src/img/tg-hero.jpg', alt: 'Hypsoé wooden refillable candle, lit',
+       promises: ['Leaves us within 2 business days', 'Free shipping over $200', 'Five European maisons'], cta: 'Shop the edit'}],
     '/shop/gifts/faux-fur': ['Faux Fur Gifts', 'Faux Fur Gifts — esotico', 'Evelyne Prélonge’s cruelty-free faux fur: scarves, collars, gloves, bags and more, from $57.50.', 'Cruelty-free faux fur gifts from Evelyne Prélonge: scarves, collars, gloves and bags. Shipped across Canada and the US.'],
     '/shop/home-fragrance': ['Home Fragrance', 'Luxury Home Fragrance — esotico', 'Scented candles, diffusers and refills from Baobab Collection, Hypsoé and Apotheca, with the tools to care for them.', 'Luxury home fragrance in Canada: Baobab Collection candles and totem diffusers, Hypsoé refillable candles, Apotheca candles from Grasse.'],
     '/shop/home-fragrance/candles': ['Scented Candles', 'Luxury Scented Candles — esotico', 'Baobab Collection candles in hand-blown glass, Hypsoé’s refillable wooden and concrete candles and Apotheca’s candles from Grasse, from $52.', 'Luxury scented candles in Canada: Baobab Collection hand-blown glass, Hypsoé refillable and Apotheca candles. Free shipping on orders over $200.'],
@@ -64,11 +103,36 @@
     if (box && box.getAttribute('data-path') === location.pathname) { return; }
     if (!box) { box = document.createElement('div'); box.className = 'esotico-cat-intro'; var crumb = h.querySelector('.nested-category-breadcrumb'); if (crumb) { crumb.after(box); } else { h.prepend(box); } }
     box.setAttribute('data-path', location.pathname);
-    box.innerHTML = '<h1></h1><p></p>';
-    box.querySelector('h1').textContent = e[0]; box.querySelector('p').textContent = e[2];
+    var hero = e[4];
+    if (hero) { banner(box, e, hero); } else {
+      box.className = 'esotico-cat-intro';
+      box.innerHTML = '<h1></h1><p></p>';
+      box.querySelector('h1').textContent = e[0]; box.querySelector('p').textContent = e[2];
+    }
     document.body.classList.add('esotico-has-intro');
     /* the brand stylesheet shows the category's own small title with !important; the H1 above now names the page */
     var old = h.querySelector('.nested-category-title'); if (old) { old.style.setProperty('display', 'none', 'important'); }
+  }
+  /* a campaign entry carries a 5th field: the banner. Text goes in with textContent (never HTML from the table); the
+     H1 stays the page's one heading; the button scrolls to the products, which sit right below on every screen size */
+  function banner(box, e, b) {
+    box.className = 'esotico-cat-intro esotico-tg';
+    box.innerHTML = '<div class="tg-art"><svg class="tg-ring" viewBox="0 0 100 100" aria-hidden="true"><circle class="f" cx="50" cy="50" r="49"/>' +
+      '<circle class="g" cx="50" cy="50" r="49" pathLength="1000"/></svg><div class="tg-arch"><img></div></div>' +
+      '<div class="tg-copy"><p class="tg-eyebrow"><b></b><span></span></p><h1><span></span><em></em></h1><p class="tg-sub"></p><ul></ul><a class="tg-cta" href="#"></a></div>';
+    var img = box.querySelector('img'); img.src = b.img; img.alt = b.alt; img.setAttribute('fetchpriority', 'high');
+    box.querySelector('.tg-eyebrow span').textContent = b.eyebrow;
+    box.querySelector('h1 span').textContent = e[0].replace(b.em, '').trim();
+    box.querySelector('h1 em').textContent = b.em;
+    box.querySelector('.tg-sub').textContent = e[2];
+    var ul = box.querySelector('ul');
+    for (var i = 0; i < b.promises.length; i++) { var li = document.createElement('li'); li.textContent = b.promises[i]; ul.appendChild(li); }
+    var a = box.querySelector('.tg-cta'); a.textContent = b.cta;
+    a.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      var g = document.querySelector('.product-list-filter-container, .product-list-layout-container');
+      if (g) { g.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
   }
   /* screen-reader names Lighthouse found missing (30 Sep): the shop's icon-only Filter button on phones, and the empty
      duplicate link Squarespace puts over each product card's status on the homepage (the card's own link already names it) */
