@@ -7,13 +7,16 @@
 const FILES = ['esotico-profile-picture.png', '1-new-chapter.mp4', '2-gather-beautifully.mp4', '3-hypsoe-refill.mp4',
   '4-baobab-aurum.mp4', '5-ethnicraft-trays.mp4', '6-faux-fur.mp4'];
 const TO = 'https://www.tiktok.com';
+// TikTok's CSP blocks framing this page, so it is opened as a tab (rel="opener") and answers its opener.
 (async () => {
-  if (parent === window) return;
+  const host = window.opener || (parent !== window ? parent : null);
+  if (!host) return;
   const one = new URLSearchParams(location.search).get('f');
   for (const f of FILES.filter(n => !one || n === one)) {
     const b = await (await fetch(f, {cache: 'no-store'})).blob();
-    parent.postMessage({rv: {[f]: b}}, TO);
+    host.postMessage({rv: {[f]: b}}, TO);
   }
-  parent.postMessage({rv: {_done: true}}, TO);
+  host.postMessage({rv: {_done: true}}, TO);
+  document.body.textContent = 'Sent to TikTok. You can close this tab.';
 })();
 </script>
