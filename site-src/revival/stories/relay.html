@@ -1,0 +1,17 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>esotico revival stories relay</title>
+<script>
+// Hands the revival Story files to Meta Business Suite when framed there (its CSP blocks fetching them directly).
+const FILES = ['story-01-a-new-chapter.jpg', 'story-02-hypsoe-wooden-candle.jpg', 'story-03-baobab-aurum.jpg',
+  'story-04-ethnicraft-trays.jpg', 'story-05-maisons-1-cover.jpg', 'story-06-baobab-pierre-de-lune.jpg',
+  'story-07-how-we-ship.jpg', 'story-08-ethnicraft-cushions.jpg', 'story-09-gather-beautifully.mp4'];
+(async () => {
+  if (parent === window) return;
+  for (const f of FILES) {
+    const b = await (await fetch(f, {cache: 'no-store'})).blob();
+    parent.postMessage({rv: {[f]: b}}, 'https://business.facebook.com');
+  }
+  parent.postMessage({rv: {_done: true}}, 'https://business.facebook.com');
+})();
+</script>
