@@ -1,0 +1,15 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>esotico pack 3 relay</title>
+<script>
+// Hands the Pack 3 files to Meta Business Suite when framed there (its CSP blocks fetching them directly).
+const FILES = ['early-evenings-story.mp4', 'early-evenings-story.jpg', 'early-evenings-feed.mp4', 'early-evenings-feed.jpg'];
+(async () => {
+  if (parent === window) return;
+  for (const f of FILES) {
+    const b = await (await fetch(f, {cache: 'no-store'})).blob();
+    parent.postMessage({rv: {[f]: b}}, 'https://business.facebook.com');
+  }
+  parent.postMessage({rv: {_done: true}}, 'https://business.facebook.com');
+})();
+</script>
