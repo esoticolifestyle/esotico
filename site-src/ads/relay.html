@@ -1,0 +1,18 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>esotico ads relay</title>
+<script>
+// Hands the approved ad files to Meta Ads Manager / Business Suite when framed there (their CSP blocks fetching them).
+const FILES = ['thanksgiving-feed.mp4', 'thanksgiving-story.mp4', 'thanksgiving-feed.jpg', 'thanksgiving-story.jpg', 'thanksgiving-square.jpg'];
+const ALLOWED = ['https://adsmanager.facebook.com', 'https://business.facebook.com'];
+(async () => {
+  if (parent === window) return;
+  const to = new URLSearchParams(location.search).get('to');
+  if (!ALLOWED.includes(to)) return;
+  for (const f of FILES) {
+    const b = await (await fetch(f, {cache: 'no-store'})).blob();
+    parent.postMessage({rv: {[f]: b}}, to);
+  }
+  parent.postMessage({rv: {_done: true}}, to);
+})();
+</script>
