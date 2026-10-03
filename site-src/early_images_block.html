@@ -14,7 +14,7 @@
     done = true;
     var u = img.getAttribute('data-src') || img.getAttribute('data-image');
     if (!u || img.getAttribute('srcset')) return;
-    img.setAttribute('sizes', '(min-width: 768px) 50vw, 100vw');
+    img.setAttribute('sizes', '(min-width: 768px) 60vw, 100vw');
     img.setAttribute('srcset', u + '?format=500w 500w, ' + u + '?format=750w 750w, ' + u + '?format=1000w 1000w, ' + u + '?format=1500w 1500w');
     img.setAttribute('fetchpriority', 'high');
     img.setAttribute('decoding', 'async');
