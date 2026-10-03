@@ -8,7 +8,19 @@
 (function () {
   var WORKER = 'https://esotico-styling.blue-lab-ffe8.workers.dev/style';
   var root = document.getElementById('esotico-styling');
-  if (!root || root.dataset.ready) return;
+  if (!root) {
+    // On /style-my-space the block makes its own place: a new page section after the page's first one.
+    var first = document.querySelector('#sections > .page-section, article .page-section');
+    if (!first) return;
+    var sec = document.createElement('section');
+    sec.className = 'esotico-styling-section';
+    sec.style.cssText = 'padding:24px 16px 80px';
+    root = document.createElement('div');
+    root.id = 'esotico-styling';
+    sec.appendChild(root);
+    first.parentNode.insertBefore(sec, first.nextSibling);
+  }
+  if (root.dataset.ready) return;
   root.dataset.ready = '1';
 
   var css = '' +
@@ -158,7 +170,9 @@
         if (s.img) { var im = el('img'); im.src = s.img; im.alt = s.name; im.loading = 'lazy'; a.appendChild(im); }
         if (s.maison) a.appendChild(el('span', 'es-maison', s.maison));
         a.appendChild(el('span', 'es-name', s.name));
-        a.appendChild(el('span', 'es-why', p.why));
+        var why = String(p.why || '').trim();
+        if (why && !/[.!?]$/.test(why)) why += '.';
+        a.appendChild(el('span', 'es-why', why));
         a.appendChild(el('span', 'es-price', s.price));
         a.appendChild(el('span', 'es-more', 'View the piece'));
         grid.appendChild(a);

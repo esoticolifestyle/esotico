@@ -6,7 +6,8 @@
 // daily allowance is used up, calls fail; nothing is billed).
 
 const NOTES_URL = 'https://esoticolifestyle.github.io/esotico/styling/notes.json';
-const MODEL = '@cf/meta/llama-4-scout-17b-16e-instruct';
+// Free Workers AI vision models. The first is the default; the others can be named in a request while we compare them.
+const MODELS = ['@cf/meta/llama-4-scout-17b-16e-instruct', '@cf/mistralai/mistral-small-3.1-24b-instruct', '@cf/zai-org/glm-5.3-flash'];
 const ORIGINS = ['https://www.esotico.ca', 'https://esotico.ca'];
 const MAX_IMAGE_CHARS = 900_000; // ~650 KB JPEG; the page shrinks photos to 1024 px first
 
@@ -48,9 +49,11 @@ where a piece could sit (a coffee table, a console, a bed, a sofa, a bathroom co
 Rules:
 - Choose only ids that appear in the CATALOGUE. Never invent a piece.
 - Choose 3 different kinds of piece where possible (for example a tray, a candle and a cushion), not three of one kind.
-- Each reason is one sentence of at most 25 words, in a warm, assured voice, naming what in the photo the piece answers
-  (for example "the brass lamp", "the oak floor"). No prices. No exclamation marks.
-- "room" is one sentence describing the space you see.
+- Look at the whole catalogue before choosing; the order of the list means nothing.
+- "why" is one full sentence of 15 to 30 words, in a warm, assured voice, that names something in the photo and says
+  what the piece adds there. Example: "Its brushed bronze answers the warm oak of your floor and gives the coffee table
+  a place to gather keys and a candle." No prices. No exclamation marks.
+- "room" is one sentence describing the space you see: its colours, materials and mood.
 - If the photo is not of a home interior, return {"room": "not a room", "picks": []}.
 Answer with JSON only: {"room": "...", "picks": [{"id": "...", "why": "..."}, ...]}`;
 
@@ -73,6 +76,12 @@ export default {
     const notes = await loadNotes(ctx);
     const inStock = new Set(Array.isArray(input.ids) ? input.ids.filter((x) => typeof x === 'string').slice(0, 400) : []);
     const pieces = Object.entries(notes).filter(([id, n]) => n.room && inStock.has(id));
+    // Shuffle so no piece wins by sitting at the top of the list.
+    for (let i = pieces.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pieces[i], pieces[j]] = [pieces[j], pieces[i]];
+    }
+    const model = MODELS.includes(input.model) ? input.model : MODELS[0];
     if (pieces.length < 3) return reply({ error: 'catalogue unavailable' }, 503, origin);
     const catalogue = pieces.map(([id, n]) => `${id} | ${n.title} | ${n.tags.join(', ')} | ${n.note}`).join('\n');
 
@@ -82,7 +91,7 @@ export default {
 
     let raw;
     try {
-      const out = await env.AI.run(MODEL, {
+      const out = await env.AI.run(model, {
         messages: [
           { role: 'system', content: SYSTEM },
           { role: 'user', content: [
@@ -93,7 +102,8 @@ export default {
         max_tokens: 500,
         temperature: 0.4,
       });
-      raw = typeof out?.response === 'string' ? out.response : JSON.stringify(out?.response ?? out);
+      raw = typeof out?.response === 'string' ? out.response
+        : out?.choices?.[0]?.message?.content ?? JSON.stringify(out?.response ?? out);
     } catch (e) {
       return reply({ error: 'styling unavailable', detail: String(e).slice(0, 200) }, 502, origin);
     }
@@ -110,7 +120,7 @@ export default {
     const picks = (Array.isArray(parsed.picks) ? parsed.picks : [])
       .filter((p) => p && valid.has(p.id) && !seen.has(p.id) && seen.add(p.id))
       .slice(0, 3)
-      .map((p) => ({ id: p.id, why: String(p.why || '').slice(0, 220) }));
-    return reply({ room: String(parsed.room || '').slice(0, 300), picks }, 200, origin);
+      .map((p) => ({ id: p.id, why: String(p.why || '').slice(0, 260) }));
+    return reply({ room: String(parsed.room || '').slice(0, 300), picks, model }, 200, origin);
   },
 };
