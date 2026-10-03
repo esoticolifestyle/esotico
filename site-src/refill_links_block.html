@@ -1,0 +1,55 @@
+<script id="esotico-refill-links">
+/* esotico "refill for this piece" (3 Oct 2026, peer study: Diptyque keeps refills beside the piece they fill). Under the
+   Add to Cart button of each refillable piece: one line saying how the refill works and a link to it. Facts from the
+   refills' own pages: a 1 L Totem refill fills the 250 ml Totem four times; the 200 g Hypsoé refill (8 scents) fits the
+   11 cm wooden shells and the Dolmen concrete shell (not the XL shells); the Still refills are a box of nine candles. */
+(function () {
+  var TOTEM = 'When it runs low, the 1 litre refill fills this Totem four times.';
+  var SHELL = 'When the candle is finished, a 200 g refill in any of 8 scents slips into this shell.';
+  var STILL = 'Nine replacement candles for this candlestick, in a box.';
+  var MAP = {
+    'black-pearls-totem-diffuser': [TOTEM, 'black-pearls-totem-diffuser-refill-1l', 'Shop the refill'],
+    'stones-marble-totem-fragrance-diffuser': [TOTEM, 'baobab-collection-stones-marble-diffuser-refill-1l', 'Shop the refill'],
+    'nirvana-holy-totem': [TOTEM, 'baobab-collection-nirvana-holy-diffuser-refill-1l', 'Shop the refill'],
+    'feathers-touareg-totem-diffuser': [TOTEM, 'baobab-collection-feathers-touareg-diffuser-refill-1l', 'Shop the refill'],
+    'les-exclusives-aurum-totem': [TOTEM, 'baobab-collection-les-exclusives-aurum-diffuser-refill-1l', 'Shop the refill'],
+    'les-exclusives-cyprium-totem': [TOTEM, 'les-exclusives-cyprium-totem-diffuser-refill-1l', 'Shop the refill'],
+    'natural-wooden-scented-candle': [SHELL, 'wooden-and-concrete-candle-refills', 'Shop the refills'],
+    'black-wooden-scented-candle': [SHELL, 'wooden-and-concrete-candle-refills', 'Shop the refills'],
+    'light-grey-dolmen-refillable-scented-candle': [SHELL, 'wooden-and-concrete-candle-refills', 'Shop the refills'],
+    'gold-table-still-candlestick': [STILL, 'box-of-9-candles-refills-for-still-candlesticks', 'Shop the refills'],
+    'black-table-still-candlesticks': [STILL, 'box-of-9-candles-refills-for-still-candlesticks', 'Shop the refills'],
+    'copper-table-still-candlesticks': [STILL, 'box-of-9-candles-refills-for-still-candlesticks', 'Shop the refills']
+  };
+  var parts = location.pathname.split('/');
+  if (parts[1] !== 'shop' || parts[2] !== 'p') return;
+  var e = MAP[parts[3]];
+  if (!e) return;
+  var css = '.esotico-refill-line{display:flex;gap:10px;align-items:flex-start;margin:18px 0 6px;font-size:15px;line-height:1.6}' +
+    '.esotico-refill-line::before{content:"";flex:none;width:12px;height:12px;margin-top:5px;border-radius:50%;border:1px solid #84754E;background:linear-gradient(90deg,#84754E 50%,transparent 50%);box-sizing:border-box}' +
+    '.esotico-refill-line a{color:#706342;text-decoration:underline;text-underline-offset:4px;white-space:nowrap}';
+  var line = document.createElement('p');
+  line.className = 'esotico-refill-line';
+  var text = document.createElement('span');
+  text.textContent = e[0] + ' ';
+  var a = document.createElement('a');
+  a.href = '/shop/p/' + e[1];
+  a.textContent = e[2];
+  text.appendChild(a);
+  line.appendChild(text);
+  function place() {
+    if (line.isConnected) return;
+    var cart = document.querySelector('.product-add-to-cart');
+    if (!cart) return;
+    if (!document.getElementById('esotico-refill-css')) {
+      var st = document.createElement('style'); st.id = 'esotico-refill-css'; st.textContent = css; document.head.appendChild(st);
+    }
+    cart.parentNode.insertBefore(line, cart.nextSibling);
+  }
+  function start() {
+    place();
+    var n = 0, t = setInterval(function () { place(); if (++n > 50) clearInterval(t); }, 400);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
+</script>
