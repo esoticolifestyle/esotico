@@ -1,0 +1,27 @@
+<script id="esotico-header-now">
+/* Header links visible at once (3 Oct 2026). Squarespace's site animations keep the header elements it tags
+   data-animation-role="header-element" (the BRANDS and HELP folder titles, the LOGIN link) at opacity 0 until its
+   animation code runs, which waits behind the rest of the page: on the live site LOGIN and HELP showed seconds after
+   SHOP, GIFTS and ABOUT (owner, Edge and Chrome). This shows them with the rest of the header. */
+(function () {
+  var s = document.createElement('style');
+  s.textContent = '.header-display-desktop [data-animation-role="header-element"],.header-display-mobile [data-animation-role="header-element"]{opacity:1!important;transform:none!important;transition:none!important}' +
+    /* The login link ships with both words; Squarespace removes the one that does not apply only at full page load.
+       Until then show "Login" alone: once "Login" is removed (signed in), "Account" shows. */
+    '.user-accounts-text-link .unauth + .auth{display:none!important}' +
+    /* Seven menu items since the Journal (4 Oct 2026): between 768 and 1100 px wide the last one (HELP) wrapped to a
+       second line at 880 px. There the letters sit a little closer and a little smaller, on one line. */
+    '@media (min-width:768px) and (max-width:1100px){.header-display-desktop .header-nav-item>a,.header-display-desktop .header-nav-folder-title{letter-spacing:.16em!important;font-size:11px!important}.header-display-desktop .header-nav-list{flex-wrap:nowrap}}';
+  document.head.appendChild(s);
+  /* Squarespace connects the login click only at full page load; a click before that went nowhere. Until its
+     link is marked "loaded", send the click to /account (it opens the sign-in window, or the account when signed in). */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('.user-accounts-text-link') : null;
+    if (!a) return;
+    var wrap = a.closest('.user-accounts-link');
+    if (wrap && wrap.classList.contains('loaded')) return;
+    e.preventDefault();
+    window.location.href = '/account';
+  }, true);
+})();
+</script>
