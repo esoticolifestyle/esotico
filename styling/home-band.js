@@ -3,7 +3,9 @@
    esotico-styling-loader, in the night-salon look of the hero: ink ground, an arched room photograph in a gilt frame,
    capitals with one gilt Bodoni italic word, a gilt outline button. Squarespace refuses new sections built on the client
    (build/policy_pages.js), so the band lives here instead. */
-(function () {
+(function band() {
+  // The loader adds this script from the page head, so it can arrive before the page body exists.
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', band); return; }
   if (document.querySelector('.esotico-style-band')) return;
   // The home page keeps its sections in a region inside article#page-regions; the footer has page sections too.
   var sections = [].filter.call(document.querySelectorAll('main section.page-section'), function (s) {

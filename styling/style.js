@@ -5,7 +5,9 @@
    The shopper's photo is shrunk in the browser (1024 px JPEG), sent once to the esotico-styling Worker with the ids of
    the pieces in stock right now (read from this site's own /shop?format=json), and the three suggestions come back as
    cards linking to the product pages. Nothing is stored. */
-(function () {
+(function styling() {
+  // The loader adds this script from the page head, so it can arrive before the page body exists.
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', styling); return; }
   var WORKER = 'https://esotico-styling.blue-lab-ffe8.workers.dev/style';
   var root = document.getElementById('esotico-styling');
   if (!root) {
