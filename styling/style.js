@@ -56,8 +56,8 @@
     '<div class="es-card">' +
       '<p class="es-eyebrow">esotico Styling</p>' +
       '<form novalidate>' +
-        '<p class="es-lede">Photograph a coffee table, a console, a sofa, a bedside or a bathroom counter. ' +
-        'We suggest three pieces from our shelves that suit it, all in stock and ready to ship.</p>' +
+        '<p class="es-lede">A coffee table, a console, a sofa, a bedside or a bathroom counter: ' +
+        'photograph the spot you want to dress, in daylight if you can.</p>' +
         '<label class="es-drop" for="es-photo"><img class="es-preview" alt="" hidden>' +
           '<span class="es-drop-text">Choose a photo of your space</span>' +
           '<input id="es-photo" type="file" accept="image/*"></label>' +
@@ -118,7 +118,8 @@
           name: parts.length > 1 ? parts.slice(1).join(' – ') : it.title,
           price: (min < max ? 'from ' : '') + '$' + min.toFixed(2),
           url: it.fullUrl,
-          img: it.assetUrl ? it.assetUrl + '?format=500w' : ''
+          // The item's own assetUrl is a folder address; its first gallery image is the product photo.
+          img: (it.items && it.items[0] && it.items[0].assetUrl) ? it.items[0].assetUrl + '?format=500w' : ''
         };
       });
       return byId;
