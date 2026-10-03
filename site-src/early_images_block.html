@@ -1,0 +1,26 @@
+<script id="esotico-early-images">
+/* Speed test, 4 Oct 2026: on product pages Squarespace's gallery photos arrive without an address (data-src only) and
+   its image loader fills them in only after its own scripts have run, so the main photo appeared after 17 s on a
+   throttled phone. As soon as the first gallery photo exists, this gives it the same picture at four widths and high
+   priority; the browser picks the size for the screen. Squarespace's loader still handles every other photo. */
+(function () {
+  var parts = location.pathname.split('/');
+  if (parts[1] !== 'shop' || parts[2] !== 'p') return;
+  var done = false;
+  function prime() {
+    if (done) return;
+    var img = document.querySelector('.product-gallery-slides-item-image');
+    if (!img) return;
+    done = true;
+    var u = img.getAttribute('data-src') || img.getAttribute('data-image');
+    if (!u || img.getAttribute('srcset')) return;
+    img.setAttribute('sizes', '(min-width: 768px) 50vw, 100vw');
+    img.setAttribute('srcset', u + '?format=500w 500w, ' + u + '?format=750w 750w, ' + u + '?format=1000w 1000w, ' + u + '?format=1500w 1500w');
+    img.setAttribute('fetchpriority', 'high');
+    img.setAttribute('decoding', 'async');
+  }
+  var watch = new MutationObserver(function () { prime(); if (done) watch.disconnect(); });
+  watch.observe(document.documentElement, { childList: true, subtree: true });
+  document.addEventListener('DOMContentLoaded', function () { prime(); watch.disconnect(); });
+})();
+</script>
