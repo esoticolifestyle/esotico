@@ -28,13 +28,17 @@
   style.textContent = css;
   document.head.appendChild(style);
 
+  var PHOTO = 'https://images.squarespace-cdn.com/content/v1/6abad52803349b0b45a823de/1790644838828-NI5Q43OGMW8PL2SCP8XX/21037NeroChevroncushion_21039NeroChevroncushion_21044SilverNomadcushion_20083N7001sofa2seaterbeige_54b62b40-f070-4589-b91d-3afbe6fa699f.jpg';
   var band = document.createElement('section');
   band.className = 'esotico-style-band';
   band.setAttribute('aria-label', 'Style my space');
   band.innerHTML =
     '<div class="esb-in">' +
-      '<div class="esb-photo"><img alt="A leather sofa dressed with woven Ethnicraft cushions" loading="lazy" ' +
-        'src="https://images.squarespace-cdn.com/content/v1/6abad52803349b0b45a823de/1790644838828-NI5Q43OGMW8PL2SCP8XX/21037NeroChevroncushion_21039NeroChevroncushion_21044SilverNomadcushion_20083N7001sofa2seaterbeige_54b62b40-f070-4589-b91d-3afbe6fa699f.jpg?format=1000w"></div>' +
+      '<div class="esb-photo"><img alt="A leather sofa dressed with woven Ethnicraft cushions" loading="lazy" width="420" height="525" ' +
+        /* sized to the screen (speed test, 4 Oct 2026): a phone took the 1000 px file (122 KB) for a 343 px photo */
+        'sizes="(min-width: 800px) 420px, calc(100vw - 32px)" ' +
+        'srcset="' + PHOTO + '?format=500w 500w, ' + PHOTO + '?format=750w 750w, ' + PHOTO + '?format=1000w 1000w" ' +
+        'src="' + PHOTO + '?format=750w"></div>' +
       '<div class="esb-copy">' +
         '<p class="esb-eyebrow">&#9680;&nbsp;&nbsp;New &middot; esotico Styling</p>' +
         '<h2>Style my <em>space</em></h2>' +

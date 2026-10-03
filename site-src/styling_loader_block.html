@@ -5,7 +5,7 @@
    footer does not jump when style.js arrives (speed test: layout shift 0.45 on phones). style.js fills that section. */
 (function () {
   var path = location.pathname.replace(/[/]+$/, '');
-  var file = path === '/style-my-space' ? 'style.js?v=3' : path === '' ? 'home-band.js?v=5' : '';
+  var file = path === '/style-my-space' ? 'style.js?v=3' : path === '' ? 'home-band.js?v=6' : '';
   if (!file) return;
   if (path === '/style-my-space') {
     var css = document.createElement('style');

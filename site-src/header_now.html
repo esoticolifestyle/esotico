@@ -15,6 +15,9 @@
        the footer does not clip it, so it hung 230 px below the page as a gold arc on an empty cream band (owner,
        4 Oct 2026). The ring belongs to the page's own section only. */
     'footer .page-section::before{content:none!important}' +
+    /* Speed test, 4 Oct 2026: the keyboard "Skip to Content" link was the only text in Squarespace's theme serif
+       (Newsreader), so every visit downloaded that 52 KB font for a link shown only on Tab. It takes the site's sans. */
+    '.header-skip-link{font-family:"Josefin Sans","Helvetica Neue",Arial,sans-serif!important}' +
     /* The Gift Edit grew a corporate gifts band (4 Oct 2026); with the ring centred at half the taller section it ran
        across the "Give a gift card" button. A third of the way down keeps it where it sat before, behind the tiles
        and the gift card. */
