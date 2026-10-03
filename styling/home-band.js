@@ -5,7 +5,10 @@
    (build/policy_pages.js), so the band lives here instead. */
 (function () {
   if (document.querySelector('.esotico-style-band')) return;
-  var sections = document.querySelectorAll('#sections > .page-section, article > .page-section');
+  // The home page keeps its sections in a region inside article#page-regions; the footer has page sections too.
+  var sections = [].filter.call(document.querySelectorAll('main section.page-section'), function (s) {
+    return !s.closest('footer');
+  });
   if (sections.length < 2) return;
 
   var css = '' +
