@@ -38,7 +38,7 @@
       '<div class="esb-copy">' +
         '<p class="esb-eyebrow">&#9680;&nbsp;&nbsp;New &middot; esotico Styling</p>' +
         '<h2>Style my <em>space</em></h2>' +
-        '<p class="esb-text">Send us a photo of a coffee table, a sofa or a bedside. In seconds we suggest three pieces from our shelves that suit it, all in stock and ready to ship.</p>' +
+        '<p class="esb-text">Upload a photo of a coffee table, a sofa or a bedside. In seconds we suggest three pieces from our shelves that suit it, all in stock and ready to ship.</p>' +
         '<a class="esb-btn" href="/style-my-space">Try it with a photo</a>' +
       '</div>' +
     '</div>';
