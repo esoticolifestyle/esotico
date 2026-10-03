@@ -11,6 +11,10 @@
     '.user-accounts-text-link .unauth + .auth{display:none!important}' +
     /* Seven menu items since the Journal (4 Oct 2026): between 768 and 1100 px wide the last one (HELP) wrapped to a
        second line at 880 px. There the letters sit a little closer and a little smaller, on one line. */
+    /* The Gift Edit's large ring is drawn on every ink section of that page (esotico-brand.css), the footer included;
+       the footer does not clip it, so it hung 230 px below the page as a gold arc on an empty cream band (owner,
+       4 Oct 2026). The ring belongs to the page's own section only. */
+    'footer .page-section::before{content:none!important}' +
     '@media (min-width:768px) and (max-width:1100px){.header-display-desktop .header-nav-item>a,.header-display-desktop .header-nav-folder-title{letter-spacing:.16em!important;font-size:11px!important}.header-display-desktop .header-nav-list{flex-wrap:nowrap}}';
   document.head.appendChild(s);
   /* Squarespace connects the login click only at full page load; a click before that went nowhere. Until its
