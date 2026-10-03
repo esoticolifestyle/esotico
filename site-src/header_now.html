@@ -15,6 +15,10 @@
        the footer does not clip it, so it hung 230 px below the page as a gold arc on an empty cream band (owner,
        4 Oct 2026). The ring belongs to the page's own section only. */
     'footer .page-section::before{content:none!important}' +
+    /* The Gift Edit grew a corporate gifts band (4 Oct 2026); with the ring centred at half the taller section it ran
+       across the "Give a gift card" button. A third of the way down keeps it where it sat before, behind the tiles
+       and the gift card. */
+    '.collection-6abb47853128147833a522c3 main section[data-section-theme="black"]::before{top:33%!important}' +
     '@media (min-width:768px) and (max-width:1100px){.header-display-desktop .header-nav-item>a,.header-display-desktop .header-nav-folder-title{letter-spacing:.16em!important;font-size:11px!important}.header-display-desktop .header-nav-list{flex-wrap:nowrap}}';
   document.head.appendChild(s);
   /* Squarespace connects the login click only at full page load; a click before that went nowhere. Until its
