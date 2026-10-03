@@ -3,15 +3,11 @@
    esotico-styling-loader, in the night-salon look of the hero: ink ground, an arched room photograph in a gilt frame,
    capitals with one gilt Bodoni italic word, a gilt outline button. Squarespace refuses new sections built on the client
    (build/policy_pages.js), so the band lives here instead. */
-(function band() {
+(function startBand() {
   // The loader adds this script from the page head, so it can arrive before the page body exists.
-  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', band); return; }
-  if (document.querySelector('.esotico-style-band')) return;
-  // The home page keeps its sections in a region inside article#page-regions; the footer has page sections too.
-  var sections = [].filter.call(document.querySelectorAll('main section.page-section'), function (s) {
-    return !s.closest('footer');
-  });
-  if (sections.length < 2) return;
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', startBand); return; }
+  if (window.esoticoBandStarted) return;
+  window.esoticoBandStarted = true;
 
   var css = '' +
     '.esotico-style-band{background:#101820;color:#F4EFE7;padding:72px 16px}' +
@@ -46,5 +42,18 @@
         '<a class="esb-btn" href="/style-my-space">Try it with a photo</a>' +
       '</div>' +
     '</div>';
-  sections[1].parentNode.insertBefore(band, sections[1].nextSibling);
+  // Squarespace draws the home page's region again after load, which drops anything added before it. So the band is
+  // (re)placed after the second section whenever it is missing, for the first 20 seconds.
+  function place() {
+    if (band.isConnected) return;
+    // The home page keeps its sections in a region inside article#page-regions; the footer has page sections too.
+    var sections = [].filter.call(document.querySelectorAll('main section.page-section'), function (s) {
+      return !s.closest('footer');
+    });
+    if (sections.length < 2) return;
+    sections[1].parentNode.insertBefore(band, sections[1].nextSibling);
+  }
+  place();
+  var tries = 0;
+  var timer = setInterval(function () { place(); if (++tries > 50) clearInterval(timer); }, 400);
 })();
