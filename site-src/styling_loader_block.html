@@ -1,0 +1,35 @@
+<script id="esotico-styling-loader">
+/* esotico Styling: on /style-my-space loads the styling block (GitHub Pages styling/style.js); on the home page loads the
+   band that introduces it (styling/home-band.js). On /style-my-space it also places the block's section itself, at its
+   finished height (715 px desktop, 761 px phone, measured 4 Oct 2026), as soon as the page's first section exists, so the
+   footer does not jump when style.js arrives (speed test: layout shift 0.45 on phones). style.js fills that section. */
+(function () {
+  var path = location.pathname.replace(/[/]+$/, '');
+  var file = path === '/style-my-space' ? 'style.js?v=3' : path === '' ? 'home-band.js?v=5' : '';
+  if (!file) return;
+  if (path === '/style-my-space') {
+    var css = document.createElement('style');
+    css.textContent = '.esotico-styling-section{padding:24px 16px 80px;min-height:715px;box-sizing:border-box}@media (max-width:767px){.esotico-styling-section{min-height:761px}}';
+    document.head.appendChild(css);
+    var placed = false;
+    var watch = new MutationObserver(function () {
+      if (placed) return;
+      var first = document.querySelector('#sections > .page-section, article .page-section');
+      if (!first || !first.nextSibling) return;
+      var sec = document.createElement('section');
+      sec.className = 'esotico-styling-section';
+      var root = document.createElement('div');
+      root.id = 'esotico-styling';
+      sec.appendChild(root);
+      first.parentNode.insertBefore(sec, first.nextSibling);
+      placed = true;
+      watch.disconnect();
+    });
+    watch.observe(document.documentElement, { childList: true, subtree: true });
+  }
+  var s = document.createElement('script');
+  s.src = 'https://esoticolifestyle.github.io/esotico/styling/' + file;
+  s.defer = true;
+  document.head.appendChild(s);
+})();
+</script>

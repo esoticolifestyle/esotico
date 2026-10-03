@@ -219,9 +219,28 @@
   head();
   var push = history.pushState; history.pushState = function () { var r = push.apply(this, arguments); setTimeout(run, 0); return r; };
   window.addEventListener('popstate', function () { setTimeout(run, 0); });
+  /* Speed test, 4 Oct 2026. (1) On shop pages the heading and intro went in at DOMContentLoaded, after the products
+     were drawn, and pushed the grid down (layout shift 0.16 on desktop). They now go in as soon as the product list
+     starts arriving, before the first paint; the maison lines and the sold-out order follow the cards as they arrive.
+     (2) The page-wide watcher ran everything on every DOM change Squarespace makes while loading, on every page; it now
+     runs at most once per 60 ms (a timer, not requestAnimationFrame, which never fires in a background tab). */
+  var early = null;
+  if (location.pathname.indexOf('/shop') === 0) {
+    early = new MutationObserver(function () {
+      if (!document.querySelector('.product-list-container')) { return; }
+      body(); maisonLines(); soldOutLast();
+    });
+    early.observe(document.documentElement, { childList: true, subtree: true });
+  }
   document.addEventListener('DOMContentLoaded', function () {
+    if (early) { early.disconnect(); }
     run();
-    new MutationObserver(function () { run(); }).observe(document.body, { childList: true, subtree: true });
+    var queued = false;
+    new MutationObserver(function () {
+      if (queued) { return; }
+      queued = true;
+      setTimeout(function () { queued = false; run(); }, 60);
+    }).observe(document.body, { childList: true, subtree: true });
     new MutationObserver(function () { head(); }).observe(document.querySelector('title') || document.head, { childList: true, characterData: true, subtree: true });
   });
 })();
