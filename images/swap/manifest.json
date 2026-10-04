@@ -1,0 +1,83 @@
+[
+ {
+  "slug": "faux-fur-wristband-gloves",
+  "productId": "6abb0f67ee59385010a41a56",
+  "oldImageId": "6abbeb0df1bc361a7cac97d0",
+  "position": 1,
+  "file": "faux-fur-wristband-gloves-2.jpg",
+  "sha": "739871b98c8b560b33ea5e8b5a2fc7bdffee7ec3997930aec92df705c84aafbd",
+  "bytes": 66216
+ },
+ {
+  "slug": "rectangle-faux-fur-tissue-box-cover-himalaya-pearl",
+  "productId": "6abb0f48d06c654358468cc9",
+  "oldImageId": "6abda589343e8e14aad531e2",
+  "position": 1,
+  "file": "rectangle-faux-fur-tissue-box-cover-himalaya-pearl-2.jpg",
+  "sha": "0b523b293c74cd6624c6a846517aa0898c38b16241c70d51fcf1380c2324a101",
+  "bytes": 539925
+ },
+ {
+  "slug": "my-first-baobab-manhattan",
+  "productId": "6abb0f1acee48d5ed3f03928",
+  "oldImageId": "6abb0f1c1563885dd9819be4",
+  "position": 0,
+  "file": "my-first-baobab-manhattan.jpg",
+  "sha": "0ef259f9335c021aaafab160f562887f9f3437042bcaa172b6c5e6adfc280cb8",
+  "bytes": 83872
+ },
+ {
+  "slug": "my-first-baobab-aurum",
+  "productId": "6abb0f15cee48d5ed3f03922",
+  "oldImageId": "6abb0f171563885dd9819ab8",
+  "position": 0,
+  "file": "my-first-baobab-aurum.jpg",
+  "sha": "f2e9599735360642a97fc31428b63a8dcdcde5a3439050240d730e51bd8549c7",
+  "bytes": 84827
+ },
+ {
+  "slug": "my-first-baobab-paris",
+  "productId": "6abb0f10cee48d5ed3f03916",
+  "oldImageId": "6abb0f121563885dd98199b6",
+  "position": 0,
+  "file": "my-first-baobab-paris.jpg",
+  "sha": "818cdfda6f08dc1d136dcec4d1e833b43f5739bbbdcee6b715aa023e4d5edc5d",
+  "bytes": 68302
+ },
+ {
+  "slug": "my-first-baobab-platinum",
+  "productId": "6abb0f0bf1bc361a7cabf688",
+  "oldImageId": "6abb0f0d1563885dd98198ff",
+  "position": 0,
+  "file": "my-first-baobab-platinum.jpg",
+  "sha": "203b4f007a0e1cdae454b031f08498393568f0907cb634f3da48486c3abd8273",
+  "bytes": 46788
+ },
+ {
+  "slug": "my-first-baobab-miami",
+  "productId": "6abb0f06ee59385010a419df",
+  "oldImageId": "6abb0f091563885dd98198c7",
+  "position": 0,
+  "file": "my-first-baobab-miami.jpg",
+  "sha": "250085cbfb2194e2e314bd0b0892a12c24516fc2f0692e1aeee2e40085a8ae35",
+  "bytes": 65213
+ },
+ {
+  "slug": "my-first-baobab-ocean-drive",
+  "productId": "6abb0f02cee48d5ed3f03901",
+  "oldImageId": "6abb0f041563885dd981986f",
+  "position": 0,
+  "file": "my-first-baobab-ocean-drive.jpg",
+  "sha": "62d4c526ce7b297c92ebdbdaa1aea70296e66bf0eb0ea2be710af7dbe801f363",
+  "bytes": 62063
+ },
+ {
+  "slug": "my-first-baobab-brussels",
+  "productId": "6abb0efdcee48d5ed3f038fb",
+  "oldImageId": "6abb0eff1563885dd98197f8",
+  "position": 0,
+  "file": "my-first-baobab-brussels.jpg",
+  "sha": "d45139e6dd5479a3f31792b6a6820e67770848308039e0481509878d09e56daa",
+  "bytes": 90383
+ }
+]
