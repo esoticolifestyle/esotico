@@ -15,6 +15,7 @@
   var CSS = [
     '.eso-s-btn{background:none!important;border:0!important;box-shadow:none!important;padding:0 0 0 24px!important;margin:0!important;min-width:0!important;width:auto!important;height:auto!important;color:inherit;cursor:pointer;display:inline-flex!important;align-items:center;vertical-align:middle;line-height:1;opacity:.9}',
     '.eso-s-btn + .header-actions-action--cart{display:inline-block!important;vertical-align:middle}',
+    '@media (max-width:767px){.eso-s-btn{padding:12px 16px 12px 10px!important}.eso-s-btn svg{width:19px;height:19px}}',
     '.eso-s-btn:hover{opacity:1}.eso-s-btn:focus-visible{outline:1px solid #B6A274;outline-offset:4px}',
     '.eso-s{position:fixed;inset:0;z-index:100000;background:#101820;color:#F4EFE7;display:none;overflow-y:auto;-webkit-overflow-scrolling:touch}',
     '.eso-s.open{display:block}html.eso-s-lock,html.eso-s-lock body{overflow:hidden!important}',
@@ -74,6 +75,8 @@
         if (new RegExp('(^|[^a-z])' + w).test(r._t)) score += 2;
       }
       if (r.s) score -= 10;
+      // accessories after the pieces themselves ("candle" shows candles before matches and snuffers)
+      if (/(match|snuffer|trimmer|refill|wick|extinguisher)/.test(r._t) && !words.some(function (w) { return /(match|snuffer|trimmer|refill|wick|extinguisher)/.test(w); })) score -= 3;
       hits.push([score, r]);
     });
     hits.sort(function (a, b) { return b[0] - a[0]; });
