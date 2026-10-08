@@ -10,12 +10,13 @@
   var SYN = { pillow: 'cushion', pillows: 'cushion', blanket: 'throw', blankets: 'throw', plaid: 'throw', fur: 'fur',
     perfume: 'diffuser', scent: 'scents', fragrance: 'fragrance', reed: 'diffuser', plate: 'tray', platter: 'tray',
     holder: 'candlestick', table: 'table', gift: 'gift', soap: 'soap', glove: 'glove', mitten: 'glove', dog: 'dog' };
+  var STOP = ['a', 'an', 'the', 'for', 'and', 'with', 'of', 'in', 'to', 'under', 'over', 'my', 'her', 'his', 'me'];
   var ICON = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21" stroke-linecap="round"/></svg>';
   var CSS = [
     '.eso-s-btn{background:none!important;border:0!important;box-shadow:none!important;padding:0 0 0 24px!important;margin:0!important;min-width:0!important;width:auto!important;height:auto!important;color:inherit;cursor:pointer;display:inline-flex!important;align-items:center;vertical-align:middle;line-height:1;opacity:.9}',
     '.eso-s-btn + .header-actions-action--cart{display:inline-block!important;vertical-align:middle}',
     '.eso-s-btn:hover{opacity:1}.eso-s-btn:focus-visible{outline:1px solid #B6A274;outline-offset:4px}',
-    '.eso-s{position:fixed;inset:0;z-index:100000;background:rgba(16,24,32,.985);color:#F4EFE7;display:none;overflow-y:auto;-webkit-overflow-scrolling:touch}',
+    '.eso-s{position:fixed;inset:0;z-index:100000;background:#101820;color:#F4EFE7;display:none;overflow-y:auto;-webkit-overflow-scrolling:touch}',
     '.eso-s.open{display:block}html.eso-s-lock,html.eso-s-lock body{overflow:hidden!important}',
     '.eso-s-in{max-width:1080px;margin:0 auto;padding:clamp(28px,6vw,72px) clamp(16px,4vw,40px) 80px}',
     '.eso-s-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:clamp(28px,5vw,48px)}',
@@ -34,7 +35,7 @@
     '@media (max-width:900px){.eso-s-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}',
     '@media (max-width:600px){.eso-s-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}',
     '.eso-s-card{color:#F4EFE7;text-decoration:none;display:block}',
-    '.eso-s-ph{aspect-ratio:1/1;background:#F4EFE7;border:1px solid rgba(182,162,116,.35);display:flex;align-items:center;justify-content:center;overflow:hidden}',
+    '.eso-s-ph{aspect-ratio:1/1;background:#fff;border:1px solid rgba(182,162,116,.35);display:flex;align-items:center;justify-content:center;overflow:hidden}',
     '.eso-s-ph img{width:100%;height:100%;object-fit:contain;transition:transform .5s ease}',
     '.eso-s-card:hover .eso-s-ph img{transform:scale(1.04)}.eso-s-card:hover .eso-s-ph{border-color:#B6A274}',
     '.eso-s-b{font:400 10px/1.3 "Josefin Sans",sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#B6A274;margin:14px 0 6px}',
@@ -61,7 +62,7 @@
   }
 
   function search(q) {
-    var words = norm(q).split(/[^a-z0-9$]+/).filter(Boolean).map(function (w) { return SYN[w] || (w.length > 3 ? w.replace(/s$/, '') : w); });
+    var words = norm(q).split(/[^a-z0-9$]+/).filter(function (w) { return w && STOP.indexOf(w) < 0; }).map(function (w) { return SYN[w] || (w.length > 3 ? w.replace(/s$/, '') : w); });
     if (!words.length) return [];
     var hits = [];
     data.forEach(function (r) {
@@ -89,7 +90,7 @@
       grid.innerHTML = '';
       note.innerHTML = 'Nothing by that name yet. Try a maison, a scent or a room, or ask the <a href="#" class="eso-s-ask" style="color:#B6A274">Concierge</a>.';
       var a = note.querySelector('.eso-s-ask');
-      a.onclick = function (e) { e.preventDefault(); close(); var c = document.querySelector('.esotico-concierge, [class*=concierge] button, [class*=concierge]'); if (c) c.click(); };
+      a.onclick = function (e) { e.preventDefault(); close(); var c = document.querySelector('button.esotico-concierge'); if (c) c.click(); };
       return;
     }
     note.textContent = res.length + (res.length === 1 ? ' piece' : ' pieces');

@@ -10,7 +10,7 @@ SHOP = 'https://www.esotico.ca'
 UA = {'User-Agent': 'esotico-feed/1.0 (+https://www.esotico.ca)'}
 MAISONS = ['Baobab Collection', 'Ethnicraft', 'Evelyne Prélonge', 'Hypsoé', 'Apotheca']
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'site-src', 'search-index.json')
-SKIP = ('Brands', 'Gifts', '$', 'pair-')
+SKIP = ('Brands', '$', 'pair-')
 
 
 def get(url):
@@ -23,9 +23,15 @@ def get(url):
 
 
 def main():
-    items, off = [], None
+    items, off, cats = [], None, {}
+
+    def walk(nodes):    # category ids -> names ("Candles", "Floral", "Gifts"...), from the shop's own category tree
+        for c in nodes or []:
+            cats[c['id']] = c['displayName']
+            walk(c.get('children'))
     while True:
         j = get(SHOP + '/shop?format=json' + (f'&offset={off}' if off else ''))
+        walk((j.get('nestedCategories') or {}).get('categories'))
         items += j.get('items', [])
         pg = j.get('pagination') or {}
         if not pg.get('nextPage'):
@@ -41,7 +47,8 @@ def main():
         prices = [float((v.get('salePriceMoney') if v.get('onSale') else v.get('priceMoney') or {}).get('value') or 0) for v in variants]
         prices = [p for p in prices if p > 0]
         stock = any(v.get('unlimited') or (v.get('qtyInStock') or 0) > 0 for v in variants)
-        words = [w for w in (it.get('categories') or []) + (it.get('tags') or []) if not w.startswith(SKIP)]
+        names = [cats[c] for c in it.get('categoryIds') or [] if c in cats]
+        words = [w for w in names + (it.get('tags') or []) if not w.startswith(SKIP)]
         out.append({
             'n': name, 'b': brand, 'u': it['fullUrl'],
             'i': (images[0] + '?format=300w') if images else '',
