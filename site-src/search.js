@@ -149,9 +149,19 @@
       cart.parentNode.insertBefore(b, cart);
     });
   }
+  /* the header's link colour lives on the cart's own <a> (ivory on the ink header, ink on light pages and once the
+     header turns solid on scroll), so the magnifier copies it rather than inheriting the wrapper's black */
+  function tint() {
+    document.querySelectorAll('.eso-s-btn').forEach(function (b) {
+      var a = b.nextElementSibling && b.nextElementSibling.querySelector('a');
+      if (a) b.style.color = getComputedStyle(a).color;
+    });
+  }
   function start() {
-    place();
-    new MutationObserver(place).observe(document.body, { childList: true, subtree: true });
+    place(); tint();
+    var t2; window.addEventListener('scroll', function () { clearTimeout(t2); t2 = setTimeout(tint, 60); }, { passive: true });
+    setInterval(tint, 1500);
+    new MutationObserver(function () { place(); tint(); }).observe(document.body, { childList: true, subtree: true });
     if (/[?&]search=1/.test(location.search)) open();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
