@@ -138,10 +138,11 @@
   }
 
   function place() {
-    document.querySelectorAll('.header-actions--right').forEach(function (box) {
-      if (box.querySelector('.eso-s-btn')) return;
-      var cart = box.querySelector('.header-actions-action--cart');
-      if (!cart) return;
+    /* every cart slot gets its own button: Squarespace keeps separate desktop and mobile copies of the cart (wrapped in
+       showOnDesktop / showOnMobile), and only one of them is visible at a size */
+    document.querySelectorAll('.header-actions-action--cart').forEach(function (cart) {
+      var prev = cart.previousElementSibling;
+      if (prev && prev.classList.contains('eso-s-btn')) return;
       var b = document.createElement('button');
       b.type = 'button'; b.className = 'eso-s-btn header-nav-item'; b.setAttribute('aria-label', 'Search'); b.innerHTML = ICON;
       b.addEventListener('click', open);
