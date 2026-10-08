@@ -12,7 +12,7 @@
     holder: 'candlestick', table: 'table', gift: 'gift', soap: 'soap', glove: 'glove', mitten: 'glove', dog: 'dog' };
   var ICON = '<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21" stroke-linecap="round"/></svg>';
   var CSS = [
-    '.eso-s-btn{background:none!important;border:0!important;box-shadow:none!important;padding:0 16px 0 0!important;margin:0!important;min-width:0!important;width:auto!important;height:auto!important;color:inherit;cursor:pointer;display:inline-flex!important;align-items:center;vertical-align:middle;line-height:1;opacity:.9}',
+    '.eso-s-btn{background:none!important;border:0!important;box-shadow:none!important;padding:0 0 0 24px!important;margin:0!important;min-width:0!important;width:auto!important;height:auto!important;color:inherit;cursor:pointer;display:inline-flex!important;align-items:center;vertical-align:middle;line-height:1;opacity:.9}',
     '.eso-s-btn + .header-actions-action--cart{display:inline-block!important;vertical-align:middle}',
     '.eso-s-btn:hover{opacity:1}.eso-s-btn:focus-visible{outline:1px solid #B6A274;outline-offset:4px}',
     '.eso-s{position:fixed;inset:0;z-index:100000;background:rgba(16,24,32,.985);color:#F4EFE7;display:none;overflow-y:auto;-webkit-overflow-scrolling:touch}',
