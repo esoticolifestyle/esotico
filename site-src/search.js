@@ -45,12 +45,12 @@
     '.eso-s-card.sold{opacity:.55}',
     '.eso-s-card:focus-visible{outline:1px solid #B6A274;outline-offset:6px}',
     '@media (prefers-reduced-motion:reduce){.eso-s-ph img{transition:none}}',
-    '.eso-s-bar{display:flex;align-items:center;gap:14px;max-width:560px;margin:6px 0 34px;padding:0 0 12px;border-bottom:1px solid rgba(132,117,78,.55);color:#84754E;cursor:text}',
+    '.eso-s-bar{display:flex;align-items:center;gap:14px;max-width:460px;margin:22px 0 8px;padding:0 0 12px;border-bottom:1px solid rgba(132,117,78,.55);color:#84754E;cursor:text}',
     '.eso-s-bar svg{flex:0 0 auto;width:20px;height:20px}',
     '.eso-s-bar input{flex:1;min-width:0;background:transparent!important;border:0!important;outline:0;box-shadow:none!important;padding:0!important;margin:0;color:#101820;cursor:text;font:italic 400 clamp(17px,2vw,21px)/1.3 "Bodoni Moda",Didot,Georgia,serif;-webkit-appearance:none;border-radius:0}',
     '.eso-s-bar input::placeholder{color:rgba(16,24,32,.55)}',
     '.eso-s-bar:hover,.eso-s-bar:focus-within{border-bottom-color:#84754E}',
-    '@media (max-width:767px){.eso-s-bar{margin:4px 0 24px}}'
+    '@media (max-width:767px){.eso-s-bar{margin:16px 0 4px}}'
   ].join('');
   var QUICK = [['Candles', '/shop/home-fragrance/candles'], ['Diffusers', '/shop/home-fragrance'], ['Refills', '/shop/home-fragrance/refills'],
     ['Faux fur', '/shop/textiles'], ['Trays and tables', '/shop/trays-and-tables'], ['Shop by scent', '/shop/scents'], ['Gift Edit', '/gift-edit']];
@@ -163,10 +163,10 @@
     /* the shop and its category pages also get a visible bar under the heading (9 Oct, owner: "shouldn't there be a
        clear search bar in the shop page?"); typing in it carries the words into the same overlay */
     var head = document.querySelector('.product-list > .product-list-header');
-    if (head && !(head.nextElementSibling && head.nextElementSibling.classList.contains('eso-s-bar'))) {
+    if (head && !head.querySelector('.eso-s-bar')) {
       var bar = document.createElement('div');
       bar.className = 'eso-s-bar';
-      bar.innerHTML = ICON + '<input type="search" aria-label="Search the collection" autocomplete="off" placeholder="Search the collection: a candle, a maison, a scent…">';
+      bar.innerHTML = ICON + '<input type="search" aria-label="Search the collection" autocomplete="off" placeholder="Search the collection">';
       var f = bar.querySelector('input');
       f.readOnly = true;   // the bar only opens the overlay, so a phone raises its keyboard once, for the overlay's field
       f.addEventListener('click', function () { open(''); });
@@ -174,7 +174,7 @@
         if (e.key === 'Tab' || e.key === 'Shift') return;
         e.preventDefault(); open(e.key.length === 1 ? e.key : '');
       });
-      head.parentNode.insertBefore(bar, head.nextSibling);
+      head.appendChild(bar);   // inside the heading block: the list is a CSS grid, a sibling would take a column of its own
     }
   }
   /* the header's link colour lives on the cart's own <a> (ivory on the ink header, ink on light pages and once the
