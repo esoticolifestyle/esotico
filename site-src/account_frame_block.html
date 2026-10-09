@@ -1,0 +1,167 @@
+<script id="esotico-account-frame">
+/* Customer accounts (3 Oct 2026). Squarespace draws Sign in / Create account / Forgot password and the signed-in
+   Account panel (Orders, Payment Methods, Address, Profile) in a same-site frame (#accountFrame -> /account/frame/...),
+   which the site's Custom CSS cannot reach, so this styles it from inside. Its class names are hashed and change, so the
+   colours are set by what each element shows: white surfaces -> ink, dark text -> ivory, grey text -> soft ivory,
+   links -> gilt, the dark action button -> gilt. It re-runs whenever a class changes (a field's box turns white while
+   typing) and tames white hover rows. While the frame is open the newsletter pop-up is hidden: it used to open on its
+   timer over the sign-up form. */
+(function () {
+  var INK = '#101820', IVORY = '#F4EFE7', SOFT = 'rgba(244,239,231,.62)', GILT = '#B6A274', LINE = 'rgba(244,239,231,.16)';
+  var HOVER = 'rgba(244,239,231,.07)';
+  var LOGO = 'https://images.squarespace-cdn.com/content/6abad52803349b0b45a823de/fb83455f-049d-43c4-94c9-db9a58a463c3/esotico-wordmark-ivory.png?content-type=image%2Fpng&format=500w';
+  var OURS = ['rgb(244, 239, 231)', 'rgba(244, 239, 231, 0.62)', 'rgb(182, 162, 116)', 'rgb(16, 24, 32)'];
+  var FONTS = 'https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500&family=Josefin+Sans:wght@400;600&display=swap';
+  var CSS = [
+    '*{font-family:"Josefin Sans","Helvetica Neue",Arial,sans-serif!important;transition:none!important}',
+    'h1,h2{font-family:"Bodoni Moda",Didot,"Bodoni 72",Georgia,serif!important;font-weight:400!important;letter-spacing:.01em!important}',
+    'html.esotico-login div:has(> h1){border:1px solid rgba(182,162,116,.55)!important;border-radius:0!important;box-shadow:0 30px 80px rgba(0,0,0,.45)!important}',
+    'div:has(> input),div:has(> div > input){background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;outline:0!important}',
+    'input,textarea,select{background:transparent!important;color:#F4EFE7!important;border:0!important;border-bottom:1px solid rgba(244,239,231,.35)!important;border-radius:0!important;box-shadow:none!important}',
+    'input:focus,textarea:focus,select:focus{border-bottom-color:#B6A274!important;outline:none!important}',
+    'input::placeholder,textarea::placeholder{color:rgba(244,239,231,.55)!important}',
+    'input:autofill,input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus{-webkit-text-fill-color:#F4EFE7!important;box-shadow:0 0 0 1000px #101820 inset!important}',
+    'button,[role=button]{border-radius:0!important}',
+    'button[type=submit]{text-transform:uppercase!important;letter-spacing:.18em!important;font-weight:600!important}'
+  ].join('');
+  /* The header link (9 Oct, owner: "shows login, I couldn't click it, then it changed to account", then: "says account
+     instead of login before I login"): Squarespace prints both words and removes one once its account script has loaded
+     and checked the session, seconds later on a phone; until then the link is href="#" with no handler. So the word is
+     drawn by CSS from a remembered state: LOGIN for a guest, ACCOUNT once signed in. The state is read from what
+     Squarespace finally keeps (only .auth left = signed in), set the moment the sign-in window moves past /login, and
+     remembered for the next page, so the word is right from the first paint and only changes when the state does. A
+     click that comes before Squarespace's handler goes to /account, the full sign-in page, instead of doing nothing. */
+  var PAGE = 'html.esotico-account-open .sqs-slide-wrapper[data-slide-type="popup-overlay"]{display:none!important}' +
+    '.user-accounts-text-link > span{display:none!important}.user-accounts-text-link::after{content:"Login"}' +
+    'html.eso-auth .user-accounts-text-link::after{content:"Account"}';
+  function setAuth(on) {
+    document.documentElement.classList.toggle('eso-auth', on);
+    try { localStorage.setItem('eso-auth', on ? '1' : '0'); } catch (e) {}
+  }
+  try { if (localStorage.getItem('eso-auth') === '1') document.documentElement.classList.add('eso-auth'); } catch (e) {}
+  /* Squarespace keeps both spans for a guest (its CSS hides .auth after .unauth) and removes .unauth once it has found a
+     session, so: .unauth gone = signed in; .unauth still there 5 s after load, with the handler bound = a guest */
+  var loadedAt = Date.now();
+  function readAuth() {
+    var a = document.querySelector('[data-controllers-bound] .user-accounts-text-link');
+    if (!a) return;
+    if (!a.querySelector('.unauth')) setAuth(true);
+    else if (Date.now() - loadedAt > 5000) setAuth(false);
+  }
+  setTimeout(readAuth, 5200);
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('.user-accounts-text-link');
+    if (!a) return;
+    var box = a.closest('[data-controller="UserAccountLink"]');
+    if (box && !box.hasAttribute('data-controllers-bound')) { e.preventDefault(); e.stopPropagation(); location.href = '/account'; }
+  }, true);
+  function rgb(c) {
+    var a = c.indexOf('('), b = c.indexOf(')');
+    if (a < 0 || b < 0) return [0, 0, 0, 0];
+    var p = c.slice(a + 1, b).split(',').map(parseFloat);
+    return [p[0], p[1], p[2], p.length > 3 ? p[3] : 1];
+  }
+  function paint(el, w) {
+    var tag = el.tagName;
+    if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'svg' || tag === 'path' || tag === 'IMG') return;
+    if (el.closest('[data-esotico-btn]')) return;
+    var cs = w.getComputedStyle(el);
+    var bg = rgb(cs.backgroundColor), lb = (bg[0] + bg[1] + bg[2]) / 3;
+    var isBtn = tag === 'BUTTON' || el.getAttribute('role') === 'button';
+    if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT' && bg[3] > 0.5) {
+      if (isBtn && lb < 110 && cs.backgroundColor !== 'rgb(16, 24, 32)') {
+        el.setAttribute('data-esotico-btn', '1');
+        el.style.setProperty('background-color', GILT, 'important');
+        el.style.setProperty('color', INK, 'important');
+        el.style.setProperty('border-color', GILT, 'important');
+        var kids = el.querySelectorAll('*');
+        for (var k = 0; k < kids.length; k++) kids[k].style.setProperty('color', INK, 'important');
+        return;
+      }
+      if (lb >= 245 && !el.hasAttribute('data-esotico-hover')) el.style.setProperty('background-color', INK, 'important');
+      else if (lb >= 200 && !el.hasAttribute('data-esotico-hover')) el.style.setProperty('background-color', 'rgba(244,239,231,.05)', 'important');
+    }
+    if (OURS.indexOf(cs.color) < 0) {
+      var fc = rgb(cs.color), lf = (fc[0] + fc[1] + fc[2]) / 3;
+      if (tag === 'A' || fc[2] > fc[0] + 60) el.style.setProperty('color', GILT, 'important');
+      else if (lf < 95) el.style.setProperty('color', IVORY, 'important');
+      else if (lf < 215) el.style.setProperty('color', SOFT, 'important');
+    }
+    if (el.children.length === 0 && /^sign out$/i.test(el.textContent.trim())) {
+      el.style.setProperty('color', GILT, 'important');
+      el.style.setProperty('font-size', '11px', 'important');
+      el.style.setProperty('text-transform', 'uppercase', 'important');
+      el.style.setProperty('letter-spacing', '.18em', 'important');
+    }
+    if (tag !== 'INPUT' && !el.matches('div:has(> input), div:has(> div > input)')) {
+      /* each side on its own: the Account panel's dividers are bottom-only borders whose top colour is the ivory text
+         colour, so reading only the top side left them bright grey (4 Oct) */
+      ['Top', 'Bottom', 'Left', 'Right'].forEach(function (side) {
+        if (!(parseFloat(cs['border' + side + 'Width']) > 0)) return;
+        var bc = rgb(cs['border' + side + 'Color']), lc = (bc[0] + bc[1] + bc[2]) / 3;
+        var mine = (bc[0] === 244 && bc[1] === 239 && bc[2] === 231) || (bc[0] === 182 && bc[1] === 162 && bc[2] === 116);
+        var prop = 'border-' + side.toLowerCase() + '-color';
+        if (!mine && lc > 180) el.style.setProperty(prop, 'rgba(182,162,116,.35)', 'important');
+        else if (!mine && lc < 120 && bc[3] > 0.5) el.style.setProperty(prop, 'rgba(244,239,231,.55)', 'important');
+      });
+    }
+  }
+  function logo(d) {
+    var login = d.defaultView.location.pathname.indexOf('/login') >= 0;
+    var p = d.defaultView.location.pathname;   // past sign-in, inside the account panel: the customer is signed in
+    if (!login && !/create|forgot|reset|register|verify/.test(p) && d.body && /orders|address|profile|payment/i.test(d.body.textContent)) setAuth(true);
+    d.documentElement.classList.toggle('esotico-login', login);
+    var h = d.querySelector('h1');
+    if (!login || !h || d.getElementById('esotico-logo')) return;
+    var img = d.createElement('img');
+    img.id = 'esotico-logo'; img.src = LOGO; img.alt = 'esotico';
+    img.style.cssText = 'display:block;width:150px;height:auto;margin:0 auto 18px';
+    h.parentNode.insertBefore(img, h);
+  }
+  function recolor(d) {
+    if (!d.body) return;
+    logo(d);
+    var w = d.defaultView, els = d.body.querySelectorAll('*');
+    for (var i = 0; i < els.length; i++) paint(els[i], w);
+  }
+  function hover(d, target) {
+    var w = d.defaultView, old = d.querySelectorAll('[data-esotico-hover]');
+    for (var i = 0; i < old.length; i++) { old[i].style.removeProperty('background-color'); old[i].removeAttribute('data-esotico-hover'); }
+    for (var el = target; el && el.nodeType === 1 && el !== d.body; el = el.parentElement) {
+      var bg = rgb(w.getComputedStyle(el).backgroundColor);
+      if (bg[3] > 0.5 && (bg[0] + bg[1] + bg[2]) / 3 >= 200) {
+        el.setAttribute('data-esotico-hover', '1');
+        el.style.setProperty('background-color', HOVER, 'important');
+      }
+    }
+  }
+  function styleFrame(f) {
+    try {
+      var d = f.contentDocument;
+      if (!d || !d.head || !d.body) return;
+      if (!d.getElementById('esotico-account-style')) {
+        var l = d.createElement('link'); l.rel = 'stylesheet'; l.href = FONTS; d.head.appendChild(l);
+        var s = d.createElement('style'); s.id = 'esotico-account-style'; s.textContent = CSS; d.head.appendChild(s);
+        new f.contentWindow.MutationObserver(function () { recolor(d); })
+          .observe(d.body, {childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['class']});
+        d.addEventListener('mouseover', function (e) { hover(d, e.target); });
+        d.addEventListener('mouseleave', function () { hover(d, null); });
+      }
+      recolor(d);
+    } catch (e) {}
+  }
+  function check() {
+    readAuth();
+    var f = document.getElementById('accountFrame');
+    document.documentElement.classList.toggle('esotico-account-open', !!f);
+    if (f && !f.getAttribute('data-esotico')) {
+      f.setAttribute('data-esotico', '1');
+      f.addEventListener('load', function () { styleFrame(f); setTimeout(function () { styleFrame(f); }, 400); });
+    }
+    if (f) styleFrame(f);
+  }
+  var ps = document.createElement('style'); ps.textContent = PAGE; document.head.appendChild(ps);
+  new MutationObserver(check).observe(document.documentElement, {childList: true, subtree: true});
+  check();
+})();
+</script>
