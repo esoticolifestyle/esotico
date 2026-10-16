@@ -1,10 +1,10 @@
 /* esotico homepage hero: a silent loop inside the arch (16 Oct 2026, owner: "an introductory video ... inside the arch").
    The photograph stays the first paint and the poster; the film is fetched only after the page has loaded, and never for
    visitors who ask for reduced motion or save data. It fades in once it is actually playing, so a slow network shows the
-   photograph, never a black box. Film: films/hero-arch-v1.mp4 (720x900, 11.9 s, 832 KB, built by marketing/hero_loop.py). */
+   photograph, never a black box. Film: films/hero-arch-v2.mp4 (720x900, 19.3 s, 1.6 MB, the whole range, built by marketing/hero_loop.py). */
 (function () {
   var BLOCK = '.fe-block-57f564f120d8876331d2 .fluid-image-container';
-  var SRC = 'https://esoticolifestyle.github.io/esotico/films/hero-arch-v1.mp4';
+  var SRC = 'https://esoticolifestyle.github.io/esotico/films/hero-arch-v2.mp4';
   var mq = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
   var conn = navigator.connection || {};
   if ((mq && mq.matches) || conn.saveData) return;
