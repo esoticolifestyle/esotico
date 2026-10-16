@@ -1,13 +1,16 @@
 /* esotico homepage hero: a silent loop inside the arch (16 Oct 2026, owner: "an introductory video ... inside the arch").
    The photograph stays the first paint and the poster; the film is fetched only after the page has loaded, and never for
    visitors who ask for reduced motion or save data. It fades in once it is actually playing, so a slow network shows the
-   photograph, never a black box. Film: films/hero-arch-v2.mp4 (720x900, 19.3 s, 1.6 MB, the whole range, built by marketing/hero_loop.py). */
+   photograph, never a black box. Films: films/hero-arch-v2-desktop.mp4 (720x900, 1.1 MB) and -mobile.mp4 (480x600, 718 KB), 19.3 s, the whole range, built by marketing/hero_loop.py). */
 (function () {
   var BLOCK = '.fe-block-57f564f120d8876331d2 .fluid-image-container';
-  var SRC = 'https://esoticolifestyle.github.io/esotico/films/hero-arch-v2.mp4';
+  // two sizes (16 Oct, owner worried about weight): phones get 480x600 (718 KB) - the arch is ~330 px wide there - and
+  // larger screens 720x900 (1.1 MB); both side by side with the 1.6 MB master showed no visible difference
+  var small = window.matchMedia && window.matchMedia('(max-width: 767px)').matches;
+  var SRC = 'https://esoticolifestyle.github.io/esotico/films/hero-arch-v2-' + (small ? 'mobile' : 'desktop') + '.mp4';
   var mq = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
   var conn = navigator.connection || {};
-  if ((mq && mq.matches) || conn.saveData) return;
+  if ((mq && mq.matches) || conn.saveData || /2g/.test(conn.effectiveType || '')) return;
 
   function mount() {
     var box = document.querySelector(BLOCK);
